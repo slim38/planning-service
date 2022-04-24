@@ -21,6 +21,6 @@ export class FileReaderController {
 
         console.log(JSON.stringify(json));
 
-        return json.results;
+        return json;
     }
 }
