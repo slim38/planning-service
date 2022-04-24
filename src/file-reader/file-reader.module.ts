@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { FileReaderController } from './file-reader.controller';
 
 @Module({
-  controllers: [FileReaderController]
+  controllers: [FileReaderController],
 })
 export class FileReaderModule {}
