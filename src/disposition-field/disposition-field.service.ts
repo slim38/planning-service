@@ -12,4 +12,8 @@ export class DispositionFieldService {
     async create(template: any){
         await this.model.create(template);
     }
+
+    async bulkCreate(array: any[]){
+        await this.model.bulkCreate(array);
+    }
 }

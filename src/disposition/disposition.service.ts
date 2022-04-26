@@ -7,6 +7,8 @@ import { DispositionFieldService } from 'src/disposition-field/disposition-field
 import { Disposition } from './disposition.model';
 import {v4} from 'uuid';
 import { DispositionField } from 'src/disposition-field/disposition-field.model';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { firstCharLowerCase } from 'xml2js/lib/processors';
 
 @Injectable()
 export class DispositionService {
@@ -43,47 +45,43 @@ export class DispositionService {
             ordersInWorkCount,
             productionOrderCount
         });
-        
-        this.createFields(article, id, salesOrderCount);
 
-        console.log('done done------------------------')
-    }
+        const fields = [];
 
-    createFields(article: Article, id: string, salesOrderCount: number) {
-        console.log('Children of ID: '+article.id+' will be created');
-        article.childProductionArticles.forEach(
-            async (child) => {
-                console.log('Creating Child: '+child.id);
-                const currentStock = child.amount;
-                const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0;
-                const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
-                const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount;
-                
-                await this.dispositionFieldService.create(
-                    {
-                       dispositionId: id,
-                       salesOrderCount,
-                       plannedStock: 0,
-                       currentStock,
-                       waitingListOrderStock,
-                       ordersInWorkCount,
-                       productionOrderCount,
-                       articleId: child.id
+        function createFields(article: Article, id: string, salesOrderCount: number) {
+            article.childProductionArticles.forEach(
+                async (child) => {
+                    const currentStock = child.amount;
+                    const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0;
+                    const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
+                    const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount;
+                    
+                    fields.push(
+                        {
+                           dispositionId: id,
+                           salesOrderCount,
+                           plannedStock: 0,
+                           currentStock,
+                           waitingListOrderStock,
+                           ordersInWorkCount,
+                           productionOrderCount,
+                           articleId: child.id
+                        }
+                    );
+    
+                    if (child.childProductionArticles.length > 0) {
+                        createFields(child, id, productionOrderCount);
                     }
-                );
-
-                console.log('Creating Child done: '+child.id);
-
-                if (child.childProductionArticles.length > 0) {
-                    console.log('HEEEEYY___________________________________________' + JSON.stringify(child.childProductionArticles));
-                    await this.createFields(child, id, productionOrderCount);
                 }
-                else {
-                    console.log(JSON.stringify(await this.getAll()));
-                }
-            }
-        )
+            )
+        }
+        
+        createFields(article, id, productionOrderCount);
+
+        this.dispositionFieldService.bulkCreate(fields);
     }
+
+    
 
     async getAll() {
         return await this.model.findAll({include: [DispositionField]});
