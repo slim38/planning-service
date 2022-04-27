@@ -2,13 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Article } from 'src/article/article.model';
 import { ArticleService } from 'src/article/article.service';
-import { DispositionFieldModule } from 'src/disposition-field/disposition-field.module';
 import { DispositionFieldService } from 'src/disposition-field/disposition-field.service';
 import { Disposition } from './disposition.model';
 import {v4} from 'uuid';
 import { DispositionField } from 'src/disposition-field/disposition-field.model';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { firstCharLowerCase } from 'xml2js/lib/processors';
 
 @Injectable()
 export class DispositionService {
@@ -79,9 +76,9 @@ export class DispositionService {
         createFields(article, id, productionOrderCount);
 
         this.dispositionFieldService.bulkCreate(fields);
-    }
 
-    
+        return await this.model.findByPk(id, {include: [DispositionField]});
+    }
 
     async getAll() {
         return await this.model.findAll({include: [DispositionField]});

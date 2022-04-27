@@ -3,7 +3,8 @@ import { InjectModel } from '@nestjs/sequelize/dist/common/sequelize.decorators'
 import { OrdersInWork } from 'src/orders-in-work/orders-in-work.model';
 import { WlWorkstation } from 'src/wl-workstation/wl-workstation.model';
 import { WlWorkstationModule } from 'src/wl-workstation/wl-workstation.module';
-import { Article } from './article.model';
+import { ArticleInterface } from './article.interface';
+import { Article } from './article.model';;
 
 @Injectable()
 export class ArticleService {
@@ -64,10 +65,13 @@ export class ArticleService {
         });
     }
 
-    async create(template: any) {
+    async bulkCreate(articles: ArticleInterface[]) {
         await this.articleModel.sync();
-        await this.articleModel.create(template, {
-            include: [OrdersInWork]
+
+        const articlesAny: any[] = articles;
+
+        return await this.articleModel.bulkCreate(articlesAny, {
+            include: [{model: OrdersInWork, as: 'ordersInWork'}]
             }
         );
     }

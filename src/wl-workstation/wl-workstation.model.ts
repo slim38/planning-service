@@ -1,9 +1,11 @@
-import { Column, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { AutoIncrement, Column, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import { Article } from 'src/article/article.model';
+import { WlWorkstationInterface } from './wl-workstation.interface';
 
 @Table
-export class WlWorkstation extends Model {
+export class WlWorkstation extends Model implements WlWorkstationInterface {
   @PrimaryKey
+  @AutoIncrement
   @Column
   id: number;
 
@@ -20,7 +22,7 @@ export class WlWorkstation extends Model {
   firstbatch: number;
 
   @Column
-  lastbach: number;
+  lastbatch: number;
 
   @Column
   @ForeignKey( () => Article)

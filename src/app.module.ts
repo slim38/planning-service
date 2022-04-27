@@ -59,7 +59,7 @@ export class AppModule implements OnApplicationBootstrap {
   async onApplicationBootstrap() {
     await this.sequelize.drop();
     await this.sequelize.sync();
-
+/*
     await this.articleService.create({
       id: 1,
       ordersInWork: [
@@ -71,16 +71,10 @@ export class AppModule implements OnApplicationBootstrap {
       ]
     }).catch((err)=>console.log(err.message));
 
-    await this.articleService.create({
+    await this.articleService.bulkCreate({
       id: 2,
-      ordersInWork: [
-        {
-          period: 7,
-          amount: 13,
-          articleId: 1
-        }
-      ]
-    }).catch((err)=>console.log('FIRST___________' + err.message));
+      ordersInWork: null
+    });
 
     await this.articleService.create({
       id: 3,
@@ -110,5 +104,6 @@ export class AppModule implements OnApplicationBootstrap {
     const dispo = await this.dispositionService.getAll();
 
     console.log('\n'+JSON.stringify(dispo));
+    */
   }
 }

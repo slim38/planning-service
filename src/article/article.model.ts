@@ -11,9 +11,10 @@ import { ProductionPart } from 'src/production-part/production-part.model';
 import { PurchasingPart } from 'src/purchasing-part/purchasing-part.model';
 import { WlWorkstation } from 'src/wl-workstation/wl-workstation.model';
 import { WlWorkstationModule } from 'src/wl-workstation/wl-workstation.module';
+import { ArticleInterface } from './article.interface';
 
 @Table
-export class Article extends Model {
+export class Article extends Model implements ArticleInterface {
   @PrimaryKey
   @Column
   id: number;

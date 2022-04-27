@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { WlWorkstationInterface } from './wl-workstation.interface';
 import { WlWorkstation } from './wl-workstation.model';
 import { WlWorkstationModule } from './wl-workstation.module';
 
@@ -10,7 +11,8 @@ export class WlWorkstationService {
         private model: typeof WlWorkstation
     ) {}
 
-    async create(template: any){
-        await this.model.create(template);
+    async bulkCreate(WLs: WlWorkstationInterface[]){
+        const plainWLs: any[] = WLs
+        await this.model.bulkCreate(plainWLs);
     }
 }

@@ -3,9 +3,13 @@
 import { Controller, HttpCode, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import  xml2js, { Parser }  from 'xml2js';
+import { FileReaderService } from './file-reader.service';
 
 @Controller('file-reader')
 export class FileReaderController {
+    constructor(
+        private service: FileReaderService,
+    ) {}
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
@@ -21,6 +25,6 @@ export class FileReaderController {
 
         console.log(JSON.stringify(json));
 
-        return json;
+        return this.service.initNewPeriod(json);
     }
 }
