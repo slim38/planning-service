@@ -8,6 +8,7 @@ import { DispositionFieldModule } from 'src/disposition-field/disposition-field.
 import { DispositionFieldService } from 'src/disposition-field/disposition-field.service';
 import { Disposition } from './disposition.model';
 import { DispositionService } from './disposition.service';
+import { DispositionController } from './disposition.controller';
 
 @Module({
     imports: [
@@ -22,6 +23,7 @@ import { DispositionService } from './disposition.service';
     ],
     exports: [
         DispositionService
-    ]
+    ],
+    controllers: [DispositionController]
 })
 export class DispositionModule {}

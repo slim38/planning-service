@@ -88,6 +88,35 @@ export class DispositionService {
         return await this.model.findAll({include: [DispositionField]});
     }
 
+    findInArrayByArticle(dispositions: Disposition[], articleId) {
+        const dp: (DispositionField | { productionOrderCount: number })[] = [];
+
+        dispositions.forEach(disposition => {
+            if (disposition.salesArticleId === articleId){
+                dp.push({productionOrderCount: disposition.productionOrderCount});
+            }
+            else disposition.fields.forEach(field => {
+                if (field.articleId == articleId){
+                    dp.push(field);
+                }
+                else findInChildren(field);
+            })
+        });
+
+        function findInChildren(field: DispositionField) {
+            if (field.childFields) {
+                field.childFields.forEach(child => {
+                    if (child.articleId === articleId){
+                        dp.push(child);
+                    }
+                    else findInChildren(child);
+                })
+            }
+        }
+
+        return dp;
+    }
+
     private async findById(id: string) {
         return await this.model.findByPk(id, {
             include: [

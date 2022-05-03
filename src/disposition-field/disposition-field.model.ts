@@ -42,5 +42,5 @@ export class DispositionField extends Model {
     article: Article;
 
     @HasMany( () => DispositionField, 'parentId')
-    childField: DispositionField;
+    childFields: DispositionField[];
 }

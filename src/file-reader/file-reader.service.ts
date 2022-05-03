@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ArticleInterface } from 'src/article/article.interface';
 import { ArticleService } from 'src/article/article.service';
+import { CapacityPlanning } from 'src/capacity-planning/capacity-planning.model';
+import { CapacityPlanningService } from 'src/capacity-planning/capacity-planning.service';
 import { DispositionService } from 'src/disposition/disposition.service';
 import { OrdersInWorkInterface } from 'src/orders-in-work/orders-in-work.interface';
 import { OrdersInWorkService } from 'src/orders-in-work/orders-in-work.service';
@@ -13,7 +15,8 @@ export class FileReaderService {
         private articleService: ArticleService,
         private oiwService: OrdersInWorkService,
         private wlService: WlWorkstationService,
-        private dispoService: DispositionService
+        private dispoService: DispositionService,
+        private capacityService: CapacityPlanningService,
     ) {}
 
     async initNewPeriod(json: any){ //TODO: Define Type
@@ -27,6 +30,15 @@ export class FileReaderService {
         const dispoP1 = await this.dispoService.initialize(period, 1, forecastP1);
         const dispoP2 = await this.dispoService.initialize(period, 2, forecastP2);
         const dispoP3 = await this.dispoService.initialize(period, 3, forecastP3);
+
+        await this.capacityService.refresh(
+            [
+                dispoP1,
+                dispoP2,
+                dispoP3,
+            ],
+            period
+        );
 
         return {
             P1: dispoP1,

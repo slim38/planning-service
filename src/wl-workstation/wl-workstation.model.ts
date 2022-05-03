@@ -5,7 +5,6 @@ import { WlWorkstationInterface } from './wl-workstation.interface';
 @Table
 export class WlWorkstation extends Model implements WlWorkstationInterface {
   @PrimaryKey
-  @AutoIncrement
   @Column
   id: number;
 

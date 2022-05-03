@@ -24,6 +24,16 @@ import { Sequelize } from 'sequelize-typescript';
 import { SequelizeMethod } from 'sequelize/types/utils';
 import { OrdersInWorkService } from './orders-in-work/orders-in-work.service';
 import { DispositionService } from './disposition/disposition.service';
+import { ProductionStepModule } from './production-step/production-step.module';
+import { CapacityPlanningModule } from './capacity-planning/capacity-planning.module';
+import { CapacityPlanningFieldModule } from './capacity-planning-field/capacity-planning-field.module';
+import { PlanningFieldPositionModule } from './planning-field-position/planning-field-position.module';
+import { WorkplaceModule } from './workplace/workplace.module';
+import { Workplace } from './workplace/workplace.model';
+import { ProductionStep } from './production-step/production-step-model';
+import { CapacityPlanning } from './capacity-planning/capacity-planning.model';
+import { CapacityPlanningField } from './capacity-planning-field/capacity-planning-field.model';
+import { PlanningFieldPosition } from './planning-field-position/planning-field-position.model';
 
 @Module({
   imports: [
@@ -34,7 +44,8 @@ import { DispositionService } from './disposition/disposition.service';
       username: 'root',
       password: '',
       database: 'planning_db',
-      models: [Article, PurchasingPart, ProductionPart, WlWorkstation, OrdersInWork, Disposition, DispositionField],
+      models: [Article, PurchasingPart, ProductionPart, WlWorkstation, OrdersInWork, Disposition, DispositionField,
+      Workplace, ProductionStep, CapacityPlanning, CapacityPlanningField, PlanningFieldPosition],
     }),
     ArticleModule,
     PurchasingPartModule,
@@ -43,6 +54,11 @@ import { DispositionService } from './disposition/disposition.service';
     WlWorkstationModule,
     DispositionModule,
     DispositionFieldModule,
+    ProductionStepModule,
+    CapacityPlanningModule,
+    CapacityPlanningFieldModule,
+    PlanningFieldPositionModule,
+    WorkplaceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -57,8 +73,8 @@ export class AppModule implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap() {
-    //await this.sequelize.drop();
-    //await this.sequelize.sync();
+    await this.sequelize.drop();
+    await this.sequelize.sync().catch((err)=>console.log('FIRST___________' + err.message));
     /*
     await this.productionPartService.create(1, 26);
     await this.productionPartService.create(1, 51);

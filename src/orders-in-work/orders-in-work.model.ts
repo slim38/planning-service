@@ -7,7 +7,6 @@ import { OrdersInWorkInterface } from './orders-in-work.interface';
 @Table
 export class OrdersInWork extends Model implements OrdersInWorkInterface {
   @PrimaryKey
-  @AutoIncrement
   @Column
   id: number;
 

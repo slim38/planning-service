@@ -4,6 +4,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Article } from 'src/article/article.model';
 import { ArticleModule } from 'src/article/article.module';
 import { ArticleService } from 'src/article/article.service';
+import { CapacityPlanning } from 'src/capacity-planning/capacity-planning.model';
+import { CapacityPlanningModule } from 'src/capacity-planning/capacity-planning.module';
+import { CapacityPlanningService } from 'src/capacity-planning/capacity-planning.service';
 import { DispositionField } from 'src/disposition-field/disposition-field.model';
 import { DispositionFieldService } from 'src/disposition-field/disposition-field.service';
 import { Disposition } from 'src/disposition/disposition.model';
@@ -15,6 +18,7 @@ import { OrdersInWorkService } from 'src/orders-in-work/orders-in-work.service';
 import { WlWorkstation } from 'src/wl-workstation/wl-workstation.model';
 import { WlWorkstationModule } from 'src/wl-workstation/wl-workstation.module';
 import { WlWorkstationService } from 'src/wl-workstation/wl-workstation.service';
+import { WorkplaceModule } from 'src/workplace/workplace.module';
 import { FileReaderController } from './file-reader.controller';
 import { FileReaderService } from './file-reader.service';
 
@@ -24,7 +28,9 @@ import { FileReaderService } from './file-reader.service';
     DispositionModule,
     OrdersInWorkModule,
     WlWorkstationModule,
-    SequelizeModule.forFeature([Disposition, DispositionField, Article, OrdersInWork, WlWorkstation])
+    CapacityPlanningModule,
+    WorkplaceModule,
+    SequelizeModule.forFeature([Disposition, DispositionField, Article, OrdersInWork, WlWorkstation, CapacityPlanning])
   ],
   controllers: [FileReaderController],
   providers: [
@@ -33,7 +39,8 @@ import { FileReaderService } from './file-reader.service';
     DispositionService,
     OrdersInWorkService,
     WlWorkstationService,
-    DispositionFieldService
+    DispositionFieldService,
+    CapacityPlanningService
   ],
 })
 export class FileReaderModule {}
