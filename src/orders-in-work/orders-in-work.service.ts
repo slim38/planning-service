@@ -12,7 +12,9 @@ export class OrdersInWorkService {
 
   async bulkCreate(OIWs: OrdersInWorkInterface[]){
     const plainOIWs: any[] = OIWs;
-    await this.model.bulkCreate(plainOIWs);
+    await this.model.bulkCreate(plainOIWs, {
+      updateOnDuplicate: ['amount']
+    });
   }
 
   async getAll(){

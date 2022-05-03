@@ -13,7 +13,7 @@ export class ArticleService {
         private articleModel: typeof Article
     ){}
 
-    async findById(id){
+    async findById(id: number, period: number){
         return await this.articleModel.findAll({
             where: {
                 id
@@ -39,28 +39,100 @@ export class ArticleService {
                                                     model: Article,
                                                     as: 'childProductionArticles',
                                                     include: [
-                                                        {model: OrdersInWork},
-                                                        {model: WlWorkstation},
+                                                        {
+                                                            model: OrdersInWork,
+                                                            where: {
+                                                                period,
+                                                            },
+                                                            required: false,
+                                                        },
+                                                        {
+                                                            model: WlWorkstation,
+                                                            where: {
+                                                                period,
+                                                            },
+                                                            required: false,
+                                                        },
                                                     ]
                                                 },
-                                                {model: OrdersInWork},
-                                                {model: WlWorkstation},
+                                                {
+                                                    model: OrdersInWork,
+                                                    where: {
+                                                        period,
+                                                    },
+                                                    required: false,
+                                                },
+                                                {
+                                                    model: WlWorkstation,
+                                                    where: {
+                                                        period,
+                                                    },
+                                                    required: false,
+                                                },
                                             ]
                                         },
-                                        {model: OrdersInWork},
-                                        {model: WlWorkstation},
+                                        {
+                                            model: OrdersInWork,
+                                            where: {
+                                                period,
+                                            },
+                                            required: false,
+                                        },
+                                        {
+                                            model: WlWorkstation,
+                                            where: {
+                                                period,
+                                            },
+                                            required: false,
+                                        },
                                     ]
                                 },
-                                {model: OrdersInWork},
-                                {model: WlWorkstation},
+                                {
+                                    model: OrdersInWork,
+                                    where: {
+                                        period,
+                                    },
+                                    required: false,
+                                },
+                                {
+                                    model: WlWorkstation,
+                                    where: {
+                                        period,
+                                    },
+                                    required: false,
+                                },
                             ]
                         },
-                        {model: OrdersInWork},
-                        {model: WlWorkstation},
+                        {
+                            model: OrdersInWork,
+                            where: {
+                                period,
+                            },
+                            required: false,
+                        },
+                        {
+                            model: WlWorkstation,
+                            where: {
+                                period,
+                            },
+                            required: false,
+                        },
                     ]
                 },
-                OrdersInWork,
-                WlWorkstation
+                {
+                    model: OrdersInWork,
+                    where: {
+                        period,
+                    },
+                    required: false,
+                },
+                {
+                    model: WlWorkstation,
+                    where: {
+                        period,
+                    },
+                    required: false,
+                },
             ]
         });
     }
@@ -71,8 +143,9 @@ export class ArticleService {
         const articlesAny: any[] = articles;
 
         return await this.articleModel.bulkCreate(articlesAny, {
-            include: [{model: OrdersInWork, as: 'ordersInWork'}]
-            }
+            include: [{model: OrdersInWork, as: 'ordersInWork'}],
+            updateOnDuplicate: ['amount', 'stockValue']
+            },
         );
     }
 

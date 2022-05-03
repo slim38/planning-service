@@ -57,9 +57,22 @@ export class AppModule implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap() {
-    await this.sequelize.drop();
-    await this.sequelize.sync();
-/*
+    //await this.sequelize.drop();
+    //await this.sequelize.sync();
+    /*
+    await this.productionPartService.create(1, 26);
+    await this.productionPartService.create(1, 51);
+    
+    await this.productionPartService.create(51, 16);
+    await this.productionPartService.create(51, 17);
+    await this.productionPartService.create(51, 50);
+    await this.productionPartService.create(50, 10);
+    await this.productionPartService.create(50, 4);
+    await this.productionPartService.create(50, 49);
+    await this.productionPartService.create(49, 7);
+    await this.productionPartService.create(49, 13);
+    await this.productionPartService.create(49, 18);
+
     await this.articleService.create({
       id: 1,
       ordersInWork: [

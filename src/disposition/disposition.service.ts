@@ -17,7 +17,7 @@ export class DispositionService {
     ) {}
 
     async initialize(period: number, articleId: number, salesOrderCount: number) {
-        const articles = await this.articleService.findById(articleId);
+        const articles = await this.articleService.findById(articleId, period);
         const article = articles[0];
 
         console.log('Dispo '+JSON.stringify(article));
@@ -45,29 +45,33 @@ export class DispositionService {
 
         const fields = [];
 
-        function createFields(article: Article, id: string, salesOrderCount: number) {
+        function createFields(article: Article, id: string, salesOrderCount: number, parentFieldId?: string) {
             article.childProductionArticles.forEach(
                 async (child) => {
                     const currentStock = child.amount;
-                    const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0;
+                    const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0; //TODO: correct calculation
                     const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
                     const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount;
                     
+                    const fieldId: string = v4();
+
                     fields.push(
                         {
-                           dispositionId: id,
-                           salesOrderCount,
-                           plannedStock: 0,
-                           currentStock,
-                           waitingListOrderStock,
-                           ordersInWorkCount,
-                           productionOrderCount,
-                           articleId: child.id
+                            id: fieldId,
+                            dispositionId: id,
+                            salesOrderCount,
+                            plannedStock: 0,
+                            currentStock,
+                            waitingListOrderStock,
+                            ordersInWorkCount,
+                            productionOrderCount,
+                            articleId: child.id,
+                            parentId: parentFieldId
                         }
                     );
     
                     if (child.childProductionArticles.length > 0) {
-                        createFields(child, id, productionOrderCount);
+                        createFields(child, null, productionOrderCount, fieldId);
                     }
                 }
             )
@@ -75,12 +79,43 @@ export class DispositionService {
         
         createFields(article, id, productionOrderCount);
 
-        this.dispositionFieldService.bulkCreate(fields);
+        await this.dispositionFieldService.bulkCreate(fields);
 
-        return await this.model.findByPk(id, {include: [DispositionField]});
+        return await this.findById(id);
     }
 
     async getAll() {
         return await this.model.findAll({include: [DispositionField]});
+    }
+
+    private async findById(id: string) {
+        return await this.model.findByPk(id, {
+            include: [
+                {
+                    model: DispositionField,
+                    include: [
+                        {
+                            model: DispositionField,
+                            include: [
+                                {
+                                    model: DispositionField,
+                                    include: [
+                                        {
+                                            model: DispositionField,
+                                            include: [
+                                                {
+                                                    model: DispositionField,
+                                                    
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        });
     }
 }

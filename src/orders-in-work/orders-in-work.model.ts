@@ -1,4 +1,4 @@
-import { Column, ForeignKey, PrimaryKey } from 'sequelize-typescript';
+import { AutoIncrement, Column, ForeignKey, PrimaryKey } from 'sequelize-typescript';
 import { Model } from 'sequelize-typescript/dist/model/model/model';
 import { Table } from 'sequelize-typescript/dist/model/table/table';
 import { Article } from 'src/article/article.model';
@@ -7,6 +7,7 @@ import { OrdersInWorkInterface } from './orders-in-work.interface';
 @Table
 export class OrdersInWork extends Model implements OrdersInWorkInterface {
   @PrimaryKey
+  @AutoIncrement
   @Column
   id: number;
 
