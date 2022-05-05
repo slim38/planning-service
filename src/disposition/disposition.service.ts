@@ -31,7 +31,7 @@ export class DispositionService {
         const currentStock = article.amount;
         const waitingListOrderStock = article.waitingList.length > 0 ? article.waitingList[0].amount : 0;
         const ordersInWorkCount = article.ordersInWork.length > 0 ? article.ordersInWork[0].amount : 0;
-        const productionOrderCount = salesOrderCount + this.plannedStockDefault - waitingListOrderStock - ordersInWorkCount;
+        const productionOrderCount = salesOrderCount + this.plannedStockDefault - waitingListOrderStock - ordersInWorkCount + currentStock;
 
         await this.model.create({
             id,
