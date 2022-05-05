@@ -16,8 +16,6 @@ export class DispositionService {
         private articleService: ArticleService
     ) {}
 
-    plannedStockDefault = 50;
-
     async initialize(period: number, articleId: number, salesOrderCount: number) {
         const articles = await this.articleService.findById(articleId, period);
         const article = articles[0];
@@ -31,14 +29,14 @@ export class DispositionService {
         const currentStock = article.amount;
         const waitingListOrderStock = article.waitingList.length > 0 ? article.waitingList[0].amount : 0;
         const ordersInWorkCount = article.ordersInWork.length > 0 ? article.ordersInWork[0].amount : 0;
-        const productionOrderCount = salesOrderCount + this.plannedStockDefault - waitingListOrderStock - ordersInWorkCount + currentStock;
+        const productionOrderCount = salesOrderCount + 50 - waitingListOrderStock - ordersInWorkCount + currentStock;
 
         await this.model.create({
             id,
             period,
             salesArticleId: article.id,
             salesOrderCount,
-            plannedStock: this.plannedStockDefault,
+            plannedStock: 50,
             currentStock,
             waitingListOrderStock,
             ordersInWorkCount,
@@ -53,7 +51,7 @@ export class DispositionService {
                     const currentStock = child.amount;
                     const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0; //TODO: correct calculation
                     const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
-                    const productionOrderCount = salesOrderCount + this.plannedStockDefault - waitingListOrderStock - ordersInWorkCount - currentStock;
+                    const productionOrderCount = salesOrderCount + 50 - waitingListOrderStock - ordersInWorkCount - currentStock;
                     
                     const fieldId: string = v4();
 
