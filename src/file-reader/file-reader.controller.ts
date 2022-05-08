@@ -25,6 +25,6 @@ export class FileReaderController {
 
         console.log(JSON.stringify(json));
 
-        return this.service.initNewPeriod(json);
+        return await this.service.initNewPeriod(json);
     }
 }
