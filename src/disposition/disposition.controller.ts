@@ -7,4 +7,9 @@ export class DispositionController {
     constructor(
         private readonly service: DispositionService
     ) {}
+
+    @Post()
+    async create(@Body() dispositions: Disposition[]) {
+        console.log(JSON.stringify(dispositions))
+    }
 }

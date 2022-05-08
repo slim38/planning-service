@@ -24,6 +24,13 @@ export class AppController {
     await this.productionPartService.create(49, 13);
     await this.productionPartService.create(49, 18);
 
+    await this.productionPartService.create(2, 26);
+    await this.productionPartService.create(2, 56);
+    await this.productionPartService.create(56, 16);
+    await this.productionPartService.create(56, 16);
+
+
+
     return this.appService.getHello();
   }
 }

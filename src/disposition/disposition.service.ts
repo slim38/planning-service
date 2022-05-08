@@ -29,18 +29,11 @@ export class DispositionService {
         console.log(typeof id);
 
         const currentStock = article.amount;
+        console.log(article.waitingList.length);
         const waitingListOrderStock = article.waitingList.length > 0 ? article.waitingList[0].amount : 0;
+        console.log(waitingListOrderStock);
         const ordersInWorkCount = article.ordersInWork.length > 0 ? article.ordersInWork[0].amount : 0;
         const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStockDefault;
-
-
-        console.log('p: '+productionOrderCount);
-        console.log(salesOrderCount);
-        console.log(waitingListOrderStock);
-        console.log(ordersInWorkCount);
-        console.log(currentStock);
-        console.log(salesOrderCount + +plannedStockDefault);
-        console.log(salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock);
 
         await this.model.create({
             id,
@@ -49,7 +42,7 @@ export class DispositionService {
             salesOrderCount,
             plannedStock: plannedStockDefault,
             currentStock,
-            waitingListOrderStock,
+            waitingListOrderStock: waitingListOrderStock,
             ordersInWorkCount,
             productionOrderCount
         });
