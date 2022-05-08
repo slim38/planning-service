@@ -7,6 +7,8 @@ import { Disposition } from './disposition.model';
 import {v4} from 'uuid';
 import { DispositionField } from 'src/disposition-field/disposition-field.model';
 
+export const plannedStockDefault = 50;
+
 @Injectable()
 export class DispositionService {
     constructor(
@@ -29,14 +31,23 @@ export class DispositionService {
         const currentStock = article.amount;
         const waitingListOrderStock = article.waitingList.length > 0 ? article.waitingList[0].amount : 0;
         const ordersInWorkCount = article.ordersInWork.length > 0 ? article.ordersInWork[0].amount : 0;
-        const productionOrderCount = salesOrderCount + 50 - waitingListOrderStock - ordersInWorkCount + currentStock;
+        const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStockDefault;
+
+
+        console.log('p: '+productionOrderCount);
+        console.log(salesOrderCount);
+        console.log(waitingListOrderStock);
+        console.log(ordersInWorkCount);
+        console.log(currentStock);
+        console.log(salesOrderCount + +plannedStockDefault);
+        console.log(salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock);
 
         await this.model.create({
             id,
             period,
             salesArticleId: article.id,
             salesOrderCount,
-            plannedStock: 50,
+            plannedStock: plannedStockDefault,
             currentStock,
             waitingListOrderStock,
             ordersInWorkCount,
@@ -51,7 +62,7 @@ export class DispositionService {
                     const currentStock = child.amount;
                     const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0; //TODO: correct calculation
                     const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
-                    const productionOrderCount = salesOrderCount + 50 - waitingListOrderStock - ordersInWorkCount - currentStock;
+                    const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStockDefault;
                     
                     const fieldId: string = v4();
 
@@ -60,7 +71,7 @@ export class DispositionService {
                             id: fieldId,
                             dispositionId: id,
                             salesOrderCount,
-                            plannedStock: 0,
+                            plannedStock: plannedStockDefault,
                             currentStock,
                             waitingListOrderStock,
                             ordersInWorkCount,
