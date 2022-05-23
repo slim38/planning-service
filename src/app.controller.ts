@@ -27,7 +27,32 @@ export class AppController {
     await this.productionPartService.create(2, 26);
     await this.productionPartService.create(2, 56);
     await this.productionPartService.create(56, 16);
-    await this.productionPartService.create(56, 16);
+    await this.productionPartService.create(56, 17);
+    await this.productionPartService.create(56, 55);
+    await this.productionPartService.create(55, 5);
+    await this.productionPartService.create(55, 11);
+    await this.productionPartService.create(55, 54);
+    await this.productionPartService.create(54, 8);
+    await this.productionPartService.create(54, 14);
+    await this.productionPartService.create(54, 19);
+
+    await this.productionPartService.create(3, 26);
+    await this.productionPartService.create(3, 31);
+    await this.productionPartService.create(31, 16);
+    await this.productionPartService.create(31, 17);
+    await this.productionPartService.create(31, 30);
+    await this.productionPartService.create(30, 6);
+    await this.productionPartService.create(30, 12);
+    await this.productionPartService.create(30, 29);
+    await this.productionPartService.create(29, 9);
+    await this.productionPartService.create(29, 15);
+    await this.productionPartService.create(29, 20);
+
+
+
+    
+
+
 
 
 

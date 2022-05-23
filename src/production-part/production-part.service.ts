@@ -10,11 +10,11 @@ export class ProductionPartService {
     ) {}
 
     async create(parentArticleId: number, childArticleId: number) {
-        await this.productionPartModel.sync();
+        console.log(parentArticleId+'   '+childArticleId);
         await this.productionPartModel.create({
             parentArticleId,
             childArticleId
-        })
+        }).catch(err => console.log(err.message+'   '+err.sql));
     }
 
     async findAll(){

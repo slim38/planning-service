@@ -83,6 +83,8 @@ export class FileReaderService {
             OIWs.push(mappedOIW);
         });
 
+        console.log(JSON.stringify(OIWs));
+
         return OIWs;
     }
 
@@ -106,6 +108,8 @@ export class FileReaderService {
                 });
             }
         });
+
+        console.log(JSON.stringify(wlWorkstations));
 
         return wlWorkstations;
     }
