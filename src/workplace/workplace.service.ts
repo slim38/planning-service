@@ -11,6 +11,10 @@ export class WorkplaceService {
     ) {}
 
     async findAll(){
-        return this.model.findAll({include: [ProductionStep]});
+        return await this.model.findAll({include: [ProductionStep]});
+    }
+
+    async create(template: any) {
+        return await this.model.create(template);
     }
 }

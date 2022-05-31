@@ -9,7 +9,9 @@ export class CapacityPlanningFieldService {
         private model: typeof CapacityPlanningField,
     ) { }
 
-    async create(template: any) { //TODO define type
-        await this.model.create(template);
+    async bulkCreate(templates: any[]) { //TODO define type
+        await this.model.bulkCreate(templates, {
+            updateOnDuplicate: ['capacityNeedNew'],
+        });
     }
 }

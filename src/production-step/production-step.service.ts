@@ -10,6 +10,6 @@ export class ProductionStepService {
     ) {}
 
     async create(template: any) { //TODO: Typisieren
-        return await this.model.create(template);
+        return await this.model.create(template).catch(err => console.log(JSON.stringify(err.errors)));
     }
 }

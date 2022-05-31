@@ -16,6 +16,7 @@ export class PlanningFieldPosition extends Model {
     @Column
     workplace: number;
 
+    @PrimaryKey
     @Column
     @ForeignKey(()=>ProductionStep)
     articleId: number;
@@ -28,4 +29,7 @@ export class PlanningFieldPosition extends Model {
 
     @Column
     setupTime: number;
+
+    @Column
+    planningFieldId: string;
 }

@@ -8,5 +8,6 @@ import { ProductionStepService } from './production-step.service';
   imports: [
     SequelizeModule.forFeature([ProductionStep]),
   ],
+  exports: [ProductionStepService]
 })
 export class ProductionStepModule {}

@@ -20,4 +20,12 @@ export class OrdersInWorkService {
   async getAll(){
     return await this.model.findAll();
   }
+
+  async findByArticleId(articleId: number) {
+    return await this.model.findAll({
+      where: {
+      articleId
+      }
+    });
+  }
 }

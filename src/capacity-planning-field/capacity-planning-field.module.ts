@@ -8,5 +8,6 @@ import { CapacityPlanningFieldService } from './capacity-planning-field.service'
   imports: [
     SequelizeModule.forFeature([CapacityPlanningField]),
   ],
+  exports: [CapacityPlanningFieldService],
 })
 export class CapacityPlanningFieldModule {}
