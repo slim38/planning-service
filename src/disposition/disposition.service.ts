@@ -42,7 +42,7 @@ export class DispositionService {
             salesOrderCount,
             plannedStock: plannedStockDefault,
             currentStock,
-            waitingListOrderStock: waitingListOrderStock,
+            waitinglistOrderCount: waitingListOrderStock,
             ordersInWorkCount,
             productionOrderCount
         });
@@ -66,7 +66,7 @@ export class DispositionService {
                             salesOrderCount,
                             plannedStock: plannedStockDefault,
                             currentStock,
-                            waitingListOrderStock,
+                            waitinglistOrderCount: waitingListOrderStock,
                             ordersInWorkCount,
                             productionOrderCount,
                             articleId: child.id,
