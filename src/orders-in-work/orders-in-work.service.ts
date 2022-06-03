@@ -28,4 +28,12 @@ export class OrdersInWorkService {
       }
     });
   }
+
+  async deleteByPeriod(period: number) {
+    await this.model.destroy({
+      where: {
+        period
+      }
+    });
+  }
 }

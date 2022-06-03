@@ -14,4 +14,12 @@ export class CapacityPlanningFieldService {
             updateOnDuplicate: ['capacityNeedNew'],
         });
     }
+
+    async deleteByPeriod(period: number) {
+        await this.model.destroy({
+            where: {
+                planningPeriod: period,
+            },
+        });
+    }
 }

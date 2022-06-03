@@ -20,13 +20,12 @@ export class FileReaderService {
     ) {}
 
     async initNewPeriod(json: any){ //TODO: Define Type
-        await this.updateDatabase(json);
-
         const period =  json.results.$.period;
+        await this.updateDatabase(json, period);
         const forecastP1 = json.results.forecast[0].$.p1;
         const forecastP2 = json.results.forecast[0].$.p2;
         const forecastP3 = json.results.forecast[0].$.p3;
-
+        
         const dispoP1 = await this.dispoService.initialize(period, 1, forecastP1);
         const dispoP2 = await this.dispoService.initialize(period, 2, forecastP2);
         const dispoP3 = await this.dispoService.initialize(period, 3, forecastP3);
@@ -47,7 +46,12 @@ export class FileReaderService {
         };
     }
 
-    private async updateDatabase(json: any){ //TODO: Define Type
+    private async updateDatabase(json: any, period: number){ //TODO: Define Type
+        this.dispoService.deleteByPeriod(period);
+        this.capacityService.deleteByPeriod(period);
+        this.oiwService.deleteByPeriod(period);
+        this.wlService.deleteByPeriod(period);
+        
         const articles: ArticleInterface[] = this.extractArticlesFromJson(json);
         const OIWs: OrdersInWorkInterface[] = this.extractOIWFromJson(json);
         const wlWorkstations: WlWorkstationInterface[] = this.extractWlWorkstationFromJson(json);

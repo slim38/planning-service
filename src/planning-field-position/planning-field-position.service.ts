@@ -14,4 +14,12 @@ export class PlanningFieldPositionService {
             updateOnDuplicate: ['processTime'],
         });
     }
+
+    async deleteByPeriod(period: number) {
+        await this.model.destroy({
+            where: {
+                planningPeriod: period,
+            },
+        });
+    }
 }

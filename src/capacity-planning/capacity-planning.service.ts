@@ -120,4 +120,15 @@ export class CapacityPlanningService {
             ]
         });
     }
+
+    async deleteByPeriod(period: number) {
+        await this.planningPositionService.deleteByPeriod(period).catch(err => console.log('\n'+JSON.stringify(err)+'\n'));
+        await this.planningFieldService.deleteByPeriod(period).catch(err => console.log('\n'+JSON.stringify(err)+'\n'));
+        
+        await this.model.destroy({
+            where: {
+                period
+            },
+        });
+    }
 }

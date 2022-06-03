@@ -15,4 +15,12 @@ export class WlWorkstationService {
         const plainWLs: any[] = WLs
         await this.model.bulkCreate(plainWLs);
     }
+
+    async deleteByPeriod(period: number) {
+        await this.model.destroy({
+            where: {
+                period,
+            }
+        });
+    }
 }

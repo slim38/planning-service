@@ -151,4 +151,12 @@ export class DispositionService {
             ],
         });
     }
+
+    async deleteByPeriod(period) {
+        await this.model.destroy({
+            where: {
+                period,
+            }
+        });
+    }
 }

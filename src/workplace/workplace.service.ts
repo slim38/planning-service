@@ -17,4 +17,6 @@ export class WorkplaceService {
     async create(template: any) {
         return await this.model.create(template);
     }
+
+    
 }

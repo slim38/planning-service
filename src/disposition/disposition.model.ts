@@ -36,6 +36,8 @@ export class Disposition extends Model {
     @Column
     productionOrderCount: number;
 
-    @HasMany( () => DispositionField)
+    @HasMany( () => DispositionField, {
+        onDelete: 'CASCADE',
+    })
     fields: DispositionField[];
 }
