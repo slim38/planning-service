@@ -14,6 +14,7 @@ import { OrdersInWorkService } from 'src/orders-in-work/orders-in-work.service';
 import { ProductionStep } from 'src/production-step/production-step-model';
 import { ArticleService } from 'src/article/article.service';
 import { Article } from 'src/article/article.model';
+import { DispositionField } from 'src/disposition-field/disposition-field.model';
 
 @Injectable()
 export class CapacityPlanningService {
@@ -21,7 +22,6 @@ export class CapacityPlanningService {
         @InjectModel(CapacityPlanning)
         private readonly model: typeof CapacityPlanning,
         private readonly workplaceService: WorkplaceService,
-        private readonly dispositionService: DispositionService,
         private readonly planningFieldService: CapacityPlanningFieldService,
         private readonly planningPositionService: PlanningFieldPositionService,
         private readonly articleService: ArticleService,
@@ -38,11 +38,12 @@ export class CapacityPlanningService {
             let setUpTime = 0;
             let oiwTime = 0;
             let wipTime = 0;
+            let totalSetUpTimePrev = 0;
 
             const pfId: string = v4();
 
             for (const productionStep of workplace.productionSteps) {
-                const dispoFields = this.dispositionService.findInArrayByArticle(dispositions, productionStep.articleId);
+                const dispoFields = this.findInArrayByArticle(dispositions, productionStep.articleId);
                 let articleProcessTime = 0;
                 dispoFields.forEach(dispoField => {
                     articleProcessTime += productionStep.processTime * dispoField.productionOrderCount;
@@ -71,6 +72,10 @@ export class CapacityPlanningService {
                     wipTime += wip.timeneed;
                 }
 
+                if (article.waitingList) {
+                    totalSetUpTimePrev + productionStep.setupTime;
+                }
+
                 processTime += articleProcessTime;
                 setUpTime += productionStep.setupTime;
             };
@@ -85,7 +90,8 @@ export class CapacityPlanningService {
                 capacityNeedNew,
                 totalSetUpTimeNew: setUpTime,
                 capacityNeedPrev,
-                totalCapacityNeed: capacityNeedNew + capacityNeedPrev
+                totalCapacityNeed: capacityNeedNew + capacityNeedPrev + setUpTime,
+                totalSetUpTimePrev,
                 //TODO: Schichten, Überstunden
             });
         };
@@ -111,6 +117,35 @@ export class CapacityPlanningService {
         });
 
         console.log('\n \n'+'CREATED:_________________ ' + JSON.stringify(created));
+    }
+
+    findInArrayByArticle(dispositions: Disposition[], articleId) {
+        const dp: (DispositionField | { productionOrderCount: number })[] = [];
+
+        dispositions.forEach(disposition => {
+            if (disposition.salesArticleId === articleId){
+                dp.push({productionOrderCount: disposition.productionOrderCount});
+            }
+            else disposition.fields.forEach(field => {
+                if (field.articleId == articleId){
+                    dp.push(field);
+                }
+                else findInChildren(field);
+            })
+        });
+
+        function findInChildren(field: DispositionField) {
+            if (field.childFields) {
+                field.childFields.forEach(child => {
+                    if (child.articleId === articleId){
+                        dp.push(child);
+                    }
+                    else findInChildren(child);
+                })
+            }
+        }
+
+        return dp;
     }
 
     async getPlanning(period: number) {

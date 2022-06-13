@@ -9,7 +9,8 @@ export class DispositionController {
     ) {}
 
     @Post()
-    async create(@Body() dispositions: Disposition[]) {
-        console.log(JSON.stringify(dispositions))
+    async update(@Body() dispositions) {
+        console.log(JSON.stringify(dispositions));
+        await this.service.update(dispositions);
     }
 }

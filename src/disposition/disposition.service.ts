@@ -6,6 +6,7 @@ import { DispositionFieldService } from 'src/disposition-field/disposition-field
 import { Disposition } from './disposition.model';
 import {v4} from 'uuid';
 import { DispositionField } from 'src/disposition-field/disposition-field.model';
+import { CapacityPlanningService } from 'src/capacity-planning/capacity-planning.service';
 
 export const plannedStockDefault = 50;
 
@@ -15,7 +16,8 @@ export class DispositionService {
         @InjectModel(Disposition)
         private model: typeof Disposition,
         private dispositionFieldService: DispositionFieldService,
-        private articleService: ArticleService
+        private articleService: ArticleService,
+        private capacityService: CapacityPlanningService,
     ) {}
 
     async initialize(period: number, articleId: number, salesOrderCount: number) {
@@ -92,35 +94,6 @@ export class DispositionService {
         return await this.model.findAll({include: [DispositionField]});
     }
 
-    findInArrayByArticle(dispositions: Disposition[], articleId) {
-        const dp: (DispositionField | { productionOrderCount: number })[] = [];
-
-        dispositions.forEach(disposition => {
-            if (disposition.salesArticleId === articleId){
-                dp.push({productionOrderCount: disposition.productionOrderCount});
-            }
-            else disposition.fields.forEach(field => {
-                if (field.articleId == articleId){
-                    dp.push(field);
-                }
-                else findInChildren(field);
-            })
-        });
-
-        function findInChildren(field: DispositionField) {
-            if (field.childFields) {
-                field.childFields.forEach(child => {
-                    if (child.articleId === articleId){
-                        dp.push(child);
-                    }
-                    else findInChildren(child);
-                })
-            }
-        }
-
-        return dp;
-    }
-
     private async findById(id: string) {
         return await this.model.findByPk(id, {
             include: [
@@ -158,5 +131,55 @@ export class DispositionService {
                 period,
             }
         });
+    }
+
+    async update(result: any) { //typisieren
+        const p1 = result.result.filter(p => p.salesArticleId === 1)[0];
+        const p2 = result.result.filter(p => p.salesArticleId === 2)[0];
+        const p3 = result.result.filter(p => p.salesArticleId === 3)[0];
+
+        const period = result.periode;
+
+        await this.deleteByPeriod(period);
+        
+        await this.model.create(p1).catch((err) => console.log('FEHLER:_________ \n'+JSON.stringify(err)));
+        await this.model.create(p2);
+        await this.model.create(p3);
+
+        await this.updateFields(p1);
+        await this.updateFields(p2);
+        await this.updateFields(p3);
+
+        await this.capacityService.deleteByPeriod(period);
+        await this.capacityService.refresh(
+            [
+                p1,
+                p2,
+                p3,
+            ],
+            period
+        );
+    }
+
+    private async updateFields(dispo: any) {
+        const toCreate = [];
+
+        const  updateChild = (child: any) => {
+            toCreate.push(child);
+
+            if (child.childFields.length > 0) {
+                for (let c of child.childFields) {
+                    updateChild(c);
+                }
+            }
+        }
+
+        if (dispo.fields.length > 0) {
+            for (let c of dispo.fields) {
+                updateChild(c);
+            }
+        }
+
+        await this.dispositionFieldService.bulkCreate(toCreate);
     }
 }

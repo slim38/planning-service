@@ -6,6 +6,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { FuturInward } from 'src/future-invard/future-invard.model';
 import { OrdersInWork } from 'src/orders-in-work/orders-in-work.model';
 import { ProductionPart } from 'src/production-part/production-part.model';
 import { PurchasingPart } from 'src/purchasing-part/purchasing-part.model';
@@ -61,4 +62,7 @@ export class Article extends Model implements ArticleInterface {
 
   @HasMany( () => WlWorkstation)
   waitingList: WlWorkstation[];
+
+  @HasMany(() => FuturInward)
+  inwards: FuturInward[];
 }

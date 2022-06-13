@@ -4,8 +4,10 @@ import { ArticleService } from 'src/article/article.service';
 import { CapacityPlanning } from 'src/capacity-planning/capacity-planning.model';
 import { CapacityPlanningService } from 'src/capacity-planning/capacity-planning.service';
 import { DispositionService } from 'src/disposition/disposition.service';
+import { FutureInvardService } from 'src/future-invard/future-invard.service';
 import { OrdersInWorkInterface } from 'src/orders-in-work/orders-in-work.interface';
 import { OrdersInWorkService } from 'src/orders-in-work/orders-in-work.service';
+import { PurchasePlanningService } from 'src/purchase-planning/purchase-planning.service';
 import { WlWorkstationInterface } from 'src/wl-workstation/wl-workstation.interface';
 import { WlWorkstationService } from 'src/wl-workstation/wl-workstation.service';
 
@@ -17,6 +19,8 @@ export class FileReaderService {
         private wlService: WlWorkstationService,
         private dispoService: DispositionService,
         private capacityService: CapacityPlanningService,
+        private futureInvardService: FutureInvardService,
+        private purchasePlanning: PurchasePlanningService
     ) {}
 
     async initNewPeriod(json: any){ //TODO: Define Type
@@ -39,6 +43,8 @@ export class FileReaderService {
             period
         );
 
+        await this.purchasePlanning.initialize(period);
+
         return {
             P1: dispoP1,
             P2: dispoP2,
@@ -51,14 +57,17 @@ export class FileReaderService {
         this.capacityService.deleteByPeriod(period);
         this.oiwService.deleteByPeriod(period);
         this.wlService.deleteByPeriod(period);
+        this.futureInvardService.deleteAll();
         
         const articles: ArticleInterface[] = this.extractArticlesFromJson(json);
         const OIWs: OrdersInWorkInterface[] = this.extractOIWFromJson(json);
         const wlWorkstations: WlWorkstationInterface[] = this.extractWlWorkstationFromJson(json);
+        const inwards = this.extractInwards(json);
 
         await this.articleService.bulkCreate(articles);
         await this.oiwService.bulkCreate(OIWs);
         await this.wlService.bulkCreate(wlWorkstations);
+        await this.futureInvardService.bulkCreate(inwards);
     }
 
     private extractArticlesFromJson(json: any){ //TODO: Define Type
@@ -116,5 +125,15 @@ export class FileReaderService {
         console.log(JSON.stringify(wlWorkstations));
 
         return wlWorkstations;
+    }
+
+    private extractInwards(json) {
+        const inwards = [];
+
+        json.results.futureinwardstockmovement[0].order.forEach(element => {
+            inwards.push(element.$);
+        });
+
+        return inwards;
     }
 }

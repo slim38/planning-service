@@ -9,17 +9,31 @@ import { DispositionFieldService } from 'src/disposition-field/disposition-field
 import { Disposition } from './disposition.model';
 import { DispositionService } from './disposition.service';
 import { DispositionController } from './disposition.controller';
+import { CapacityPlanningModule } from 'src/capacity-planning/capacity-planning.module';
+import { CapacityPlanningService } from 'src/capacity-planning/capacity-planning.service';
+import { CapacityPlanning } from 'src/capacity-planning/capacity-planning.model';
+import { WorkplaceModule } from 'src/workplace/workplace.module';
+import { WorkplaceService } from 'src/workplace/workplace.service';
+import { CapacityPlanningFieldModule } from 'src/capacity-planning-field/capacity-planning-field.module';
+import { PlanningFieldPositionModule } from 'src/planning-field-position/planning-field-position.module';
+import { Workplace } from 'src/workplace/workplace.model';
 
 @Module({
     imports: [
-        SequelizeModule.forFeature([Disposition, DispositionField, Article]),
+        SequelizeModule.forFeature([Disposition, DispositionField, Article, CapacityPlanning, Workplace]),
         DispositionFieldModule,
-        ArticleModule
+        ArticleModule,
+        CapacityPlanningModule,
+        CapacityPlanningFieldModule,
+        PlanningFieldPositionModule,
+        WorkplaceModule
     ],
     providers: [
         DispositionService,
         DispositionFieldService,
-        ArticleService
+        ArticleService,
+        CapacityPlanningService,
+        WorkplaceService,
     ],
     exports: [
         DispositionService

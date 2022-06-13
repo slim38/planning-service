@@ -16,12 +16,4 @@ export class DispositionFieldService {
     async bulkCreate(array: any[]){
         await this.model.bulkCreate(array);
     }
-
-    async deleteByPeriod(period) {
-        await this.model.destroy({
-            where: {
-                period,
-            }
-        });
-    }
 }

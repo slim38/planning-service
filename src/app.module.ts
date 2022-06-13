@@ -34,6 +34,15 @@ import { ProductionStep } from './production-step/production-step-model';
 import { CapacityPlanning } from './capacity-planning/capacity-planning.model';
 import { CapacityPlanningField } from './capacity-planning-field/capacity-planning-field.model';
 import { PlanningFieldPosition } from './planning-field-position/planning-field-position.model';
+import { PurchasePlanningModule } from './purchase-planning/purchase-planning.module';
+import { PurchasePositionModule } from './purchase-position/purchase-position.module';
+import { PurchasePositionMasterModule } from './purchase-position-master/purchase-position-master.module';
+import { FutureInvardModule } from './future-invard/future-invard.module';
+import { FuturInward } from './future-invard/future-invard.model';
+import { PurchasePositionMasterService } from './purchase-position-master/purchase-position-master.service';
+import { PurchasePositionMasterModel } from './purchase-position-master/purchase-position-master.model';
+import { PurchasePlanningModel } from './purchase-planning/purchase-planning.model';
+import { PurchasePositionModel } from './purchase-position/purchase-position.model';
 
 @Module({
   imports: [
@@ -45,7 +54,8 @@ import { PlanningFieldPosition } from './planning-field-position/planning-field-
       password: '',
       database: 'planning_db',
       models: [Article, PurchasingPart, ProductionPart, WlWorkstation, OrdersInWork, Disposition, DispositionField,
-      Workplace, ProductionStep, CapacityPlanning, CapacityPlanningField, PlanningFieldPosition],
+      Workplace, ProductionStep, CapacityPlanning, CapacityPlanningField, PlanningFieldPosition, FuturInward, PurchasePlanningModel,
+      PurchasePositionModel, PurchasePositionMasterModel],
     }),
     ArticleModule,
     PurchasingPartModule,
@@ -59,6 +69,10 @@ import { PlanningFieldPosition } from './planning-field-position/planning-field-
     CapacityPlanningFieldModule,
     PlanningFieldPositionModule,
     WorkplaceModule,
+    PurchasePlanningModule,
+    PurchasePositionModule,
+    PurchasePositionMasterModule,
+    FutureInvardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -73,8 +87,8 @@ export class AppModule implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap() {
-    //await this.sequelize.drop();
-    //await this.sequelize.sync().catch((err)=>console.log('FIRST___________' + err.message));
+    await this.sequelize.drop();
+    await this.sequelize.sync().catch((err)=>console.log('FIRST___________' + err.message));
     /*
     await this.productionPartService.create(1, 26);
     await this.productionPartService.create(1, 51);

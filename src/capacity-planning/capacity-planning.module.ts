@@ -18,10 +18,10 @@ import { ArticleModule } from 'src/article/article.module';
   imports: [
     SequelizeModule.forFeature([CapacityPlanning, Workplace]),
     WorkplaceModule,
-    DispositionModule,
     CapacityPlanningFieldModule,
     PlanningFieldPositionModule,
     ArticleModule
   ],
+  exports: [CapacityPlanningService]
 })
 export class CapacityPlanningModule {}

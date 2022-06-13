@@ -15,12 +15,16 @@ import { DispositionFieldService } from 'src/disposition-field/disposition-field
 import { Disposition } from 'src/disposition/disposition.model';
 import { DispositionModule } from 'src/disposition/disposition.module';
 import { DispositionService } from 'src/disposition/disposition.service';
+import { FuturInward } from 'src/future-invard/future-invard.model';
+import { FutureInvardModule } from 'src/future-invard/future-invard.module';
+import { FutureInvardService } from 'src/future-invard/future-invard.service';
 import { OrdersInWork } from 'src/orders-in-work/orders-in-work.model';
 import { OrdersInWorkModule } from 'src/orders-in-work/orders-in-work.module';
 import { OrdersInWorkService } from 'src/orders-in-work/orders-in-work.service';
 import { PlanningFieldPosition } from 'src/planning-field-position/planning-field-position.model';
 import { PlanningFieldPositionModule } from 'src/planning-field-position/planning-field-position.module';
 import { PlanningFieldPositionService } from 'src/planning-field-position/planning-field-position.service';
+import { PurchasePlanningModule } from 'src/purchase-planning/purchase-planning.module';
 import { WlWorkstation } from 'src/wl-workstation/wl-workstation.model';
 import { WlWorkstationModule } from 'src/wl-workstation/wl-workstation.module';
 import { WlWorkstationService } from 'src/wl-workstation/wl-workstation.service';
@@ -38,6 +42,8 @@ import { FileReaderService } from './file-reader.service';
     CapacityPlanningFieldModule,
     WorkplaceModule,
     PlanningFieldPositionModule,
+    FutureInvardModule,
+    PurchasePlanningModule,
     SequelizeModule.forFeature([
       Disposition,
       DispositionField,
@@ -46,7 +52,8 @@ import { FileReaderService } from './file-reader.service';
       WlWorkstation,
       CapacityPlanning,
       CapacityPlanningField,
-      PlanningFieldPosition
+      PlanningFieldPosition,
+      FuturInward
     ])
   ],
   controllers: [FileReaderController],
@@ -59,7 +66,8 @@ import { FileReaderService } from './file-reader.service';
     DispositionFieldService,
     CapacityPlanningService,
     CapacityPlanningFieldService,
-    PlanningFieldPositionService
+    PlanningFieldPositionService,
+    FutureInvardService,
   ],
 })
 export class FileReaderModule {}
