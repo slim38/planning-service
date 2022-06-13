@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Article } from 'src/article/article.model';
+import { ForecastService } from 'src/forecast/forecast.service';
 import { PurchasePositionMasterModel } from 'src/purchase-position-master/purchase-position-master.model';
 import { PurchasePositionMasterService } from 'src/purchase-position-master/purchase-position-master.service';
 import { OrderType, PurchasePositionModel } from 'src/purchase-position/purchase-position.model';
@@ -14,6 +15,7 @@ export class PurchasePlanningService {
         private model: typeof PurchasePlanningModel,
         private readonly masterService: PurchasePositionMasterService,
         private readonly positionService: PurchasePositionService,
+        private readonly forecastService: ForecastService,
     ) {}
 
     async initialize(period: number) {
@@ -23,22 +25,42 @@ export class PurchasePlanningService {
         const masters = await this.masterService.findAll();
 
         //get Forecast TODO: Forecast-Model
-        const firstP1 = 350;
-        const firstP2 = 350;
-        const firstP3 = 350;
+        const forecast = await this.forecastService.getByPeriod(period)[0];
 
-        const secondP1 = 350;
-        const secondP2 = 350;
-        const secondP3 = 350;
+        let firstP1 = 350;
+        let firstP2 = 350;
+        let firstP3 = 350;
+
+        let secondP1 = 350;
+        let secondP2 = 350;
+        let secondP3 = 350;
     
-        const thirdP1 = 350;
-        const thirdP2 = 350;
-        const thirdP3 = 350;
+        let thirdP1 = 350;
+        let thirdP2 = 350;
+        let thirdP3 = 350;
 
-        const fourthP1 = 350;
-        const fourthP2 = 350;
-        const fourthp3 = 350;
+        let fourthP1 = 350;
+        let fourthP2 = 350;
+        let fourthp3 = 350;
 
+        if (forecast != null || forecast != undefined) {
+            firstP1 = forecast.firstP1;
+            firstP2 = forecast.firstP2;
+            firstP3 = forecast.firstP3;
+
+            secondP1 = forecast.secondP1;
+            secondP2 = forecast.secondP2;
+            secondP3 = forecast.secondP3;
+    
+            thirdP1 = forecast.thirdP1;
+            thirdP2 = forecast.thirdP2;
+            thirdP3 = forecast.thirdP3;
+
+            fourthP1 = forecast.fourthP1;
+            fourthP2 = forecast.fourthP2;
+            fourthp3 = forecast.fourthP3;
+        }
+        
         //create position in db
         await this.model.create({
             period,
@@ -71,16 +93,6 @@ export class PurchasePlanningService {
             let totalDemand = firstDemand + secondDemand + thirdDemand + fourthDemand;
             const stock = m.article.amount;
             if (stock >= totalDemand) {
-                positions.push({
-                    period,
-                    firstDemand,
-                    secondDemand,
-                    thirdDemand,
-                    fourthDemand,
-                    orderAmount: 0,
-                    orderType: null,
-                    articleId: m.articleId
-                });
                 continue;
             }
 
@@ -91,16 +103,6 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/fourthDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
-                    positions.push({
-                        period,
-                        firstDemand,
-                        secondDemand,
-                        thirdDemand,
-                        fourthDemand,
-                        orderAmount: 0,
-                        orderType: null,
-                        articleId: m.articleId
-                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
@@ -136,16 +138,6 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/thirdDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
-                    positions.push({
-                        period,
-                        firstDemand,
-                        secondDemand,
-                        thirdDemand,
-                        fourthDemand,
-                        orderAmount: 0,
-                        orderType: null,
-                        articleId: m.articleId
-                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
@@ -181,16 +173,6 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/secondDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
-                    positions.push({
-                        period,
-                        firstDemand,
-                        secondDemand,
-                        thirdDemand,
-                        fourthDemand,
-                        orderAmount: 0,
-                        orderType: null,
-                        articleId: m.articleId
-                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
@@ -226,16 +208,6 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/firstDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
-                    positions.push({
-                        period,
-                        firstDemand,
-                        secondDemand,
-                        thirdDemand,
-                        fourthDemand,
-                        orderAmount: 0,
-                        orderType: null,
-                        articleId: m.articleId
-                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {

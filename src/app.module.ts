@@ -43,6 +43,8 @@ import { PurchasePositionMasterService } from './purchase-position-master/purcha
 import { PurchasePositionMasterModel } from './purchase-position-master/purchase-position-master.model';
 import { PurchasePlanningModel } from './purchase-planning/purchase-planning.model';
 import { PurchasePositionModel } from './purchase-position/purchase-position.model';
+import { ForecastModule } from './forecast/forecast.module';
+import { Forecast } from './forecast/forecast.model';
 
 @Module({
   imports: [
@@ -55,7 +57,7 @@ import { PurchasePositionModel } from './purchase-position/purchase-position.mod
       database: 'planning_db',
       models: [Article, PurchasingPart, ProductionPart, WlWorkstation, OrdersInWork, Disposition, DispositionField,
       Workplace, ProductionStep, CapacityPlanning, CapacityPlanningField, PlanningFieldPosition, FuturInward, PurchasePlanningModel,
-      PurchasePositionModel, PurchasePositionMasterModel],
+      PurchasePositionModel, PurchasePositionMasterModel, Forecast],
     }),
     ArticleModule,
     PurchasingPartModule,
@@ -73,6 +75,7 @@ import { PurchasePositionModel } from './purchase-position/purchase-position.mod
     PurchasePositionModule,
     PurchasePositionMasterModule,
     FutureInvardModule,
+    ForecastModule,
   ],
   controllers: [AppController],
   providers: [AppService],

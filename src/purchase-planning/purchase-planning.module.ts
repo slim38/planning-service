@@ -9,6 +9,9 @@ import { PurchasePositionService } from 'src/purchase-position/purchase-position
 import { PurchasePlanningModel } from './purchase-planning.model';
 import { PurchasePlanningService } from './purchase-planning.service';
 import { PurchasePlanningController } from './purchase-planning.controller';
+import { Forecast } from 'src/forecast/forecast.model';
+import { ForecastService } from 'src/forecast/forecast.service';
+import { ForecastModule } from 'src/forecast/forecast.module';
 
 @Module({
   providers: [
@@ -20,10 +23,12 @@ import { PurchasePlanningController } from './purchase-planning.controller';
     SequelizeModule.forFeature([
       PurchasePlanningModel,
       PurchasePositionMasterModel,
-      PurchasePositionModel
+      PurchasePositionModel,
+      Forecast
     ]),
     PurchasePositionMasterModule,
     PurchasePositionModule,
+    ForecastModule
   ],
   exports: [
     PurchasePlanningService,
