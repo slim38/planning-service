@@ -90,14 +90,21 @@ export class PurchasePlanningService {
                                  m.prodThreeDemand * fourthp3;
 
             //Calculate order-data
-            const orderPeriod = m.article.inwards[0]?.orderperiod;
-            const orderArrival =  m.deliveryTime + m.deviation - (period - orderPeriod);
-            const orderAmount = m.article.inwards[0]?.amount;
-            
+            let orderPeriod = 500;
+            let orderArrival = 500;
+            let orderAmount = 0;
+
+            if (m.article.inwards[0] != undefined) {
+                orderPeriod = m.article.inwards[0]?.orderperiod;
+                orderArrival =  m.deliveryTime + m.deviation - (period - orderPeriod);
+                orderAmount = m.article.inwards[0]?.amount;
+            }
+
             let totalDemand = firstDemand + secondDemand + thirdDemand + fourthDemand;
             const stock = m.article.amount;
             if (stock >= totalDemand) {
                 positions.push({
+                    incomingOrder: orderAmount,
                     period,
                     firstDemand,
                     secondDemand,
@@ -118,6 +125,7 @@ export class PurchasePlanningService {
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -131,6 +139,7 @@ export class PurchasePlanningService {
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -143,6 +152,7 @@ export class PurchasePlanningService {
                     continue;
                 }
                 positions.push({
+                    incomingOrder: orderAmount,
                     period,
                     firstDemand,
                     secondDemand,
@@ -163,6 +173,7 @@ export class PurchasePlanningService {
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -176,6 +187,7 @@ export class PurchasePlanningService {
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -188,6 +200,7 @@ export class PurchasePlanningService {
                     continue;
                 }
                 positions.push({
+                    incomingOrder: orderAmount,
                     period,
                     firstDemand,
                     secondDemand,
@@ -208,6 +221,7 @@ export class PurchasePlanningService {
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -221,6 +235,7 @@ export class PurchasePlanningService {
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -233,6 +248,7 @@ export class PurchasePlanningService {
                     continue;
                 }
                 positions.push({
+                    incomingOrder: orderAmount,
                     period,
                     firstDemand,
                     secondDemand,
@@ -253,6 +269,7 @@ export class PurchasePlanningService {
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -266,6 +283,7 @@ export class PurchasePlanningService {
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
                     positions.push({
+                        incomingOrder: orderAmount,
                         period,
                         firstDemand,
                         secondDemand,
@@ -278,6 +296,7 @@ export class PurchasePlanningService {
                     continue;
                 }
                 positions.push({
+                    incomingOrder: orderAmount,
                     period,
                     firstDemand,
                     secondDemand,

@@ -141,7 +141,13 @@ export class FileReaderService {
         const inwards = [];
 
         json.results.futureinwardstockmovement[0].order.forEach(element => {
-            inwards.push(element.$);
+            inwards.push({
+                orderperiod: element.$.orderperiod,
+                id: element.$.id,
+                mode: element.$.mode,
+                articleId: element.$.article,
+                amount: element.$.amount,
+            });
         });
 
         return inwards;
