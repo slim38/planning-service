@@ -82,6 +82,14 @@ export class CapacityPlanningService {
 
             const capacityNeedNew = processTime;
             const capacityNeedPrev = oiwTime + wipTime;
+            const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime;
+            
+            let overtime = (totalCapacityNeed-2400)/5
+            if (overtime < 0) {
+                overtime = 0;
+            }
+            
+            let shifts = Math.floor(overtime/251) + 1;
 
             planningFields.push({
                 id: pfId,
@@ -90,8 +98,10 @@ export class CapacityPlanningService {
                 capacityNeedNew,
                 totalSetUpTimeNew: setUpTime,
                 capacityNeedPrev,
-                totalCapacityNeed: capacityNeedNew + capacityNeedPrev + setUpTime,
+                totalCapacityNeed,
                 totalSetUpTimePrev,
+                overtime,
+                shifts
                 //TODO: Schichten, Überstunden
             });
         };
