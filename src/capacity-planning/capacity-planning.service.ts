@@ -89,7 +89,7 @@ export class CapacityPlanningService {
                 overtime = 0;
             }
             
-            let shifts = Math.floor(overtime/251) + 1;
+            let shifts = Math.floor(overtime/241) + 1;
 
             planningFields.push({
                 id: pfId,
@@ -102,7 +102,6 @@ export class CapacityPlanningService {
                 totalSetUpTimePrev,
                 overtime,
                 shifts
-                //TODO: Schichten, Überstunden
             });
         };
 

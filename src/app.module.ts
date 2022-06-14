@@ -45,6 +45,7 @@ import { PurchasePlanningModel } from './purchase-planning/purchase-planning.mod
 import { PurchasePositionModel } from './purchase-position/purchase-position.model';
 import { ForecastModule } from './forecast/forecast.module';
 import { Forecast } from './forecast/forecast.model';
+import { FileWriterModule } from './file-writer/file-writer.module';
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { Forecast } from './forecast/forecast.model';
     PurchasePositionMasterModule,
     FutureInvardModule,
     ForecastModule,
+    FileWriterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
