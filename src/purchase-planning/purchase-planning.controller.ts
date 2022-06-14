@@ -9,6 +9,8 @@ export class PurchasePlanningController {
 
     @Get()
     async getPurchasePlanning(@Query('period') period: number) {
+        await this.service.initialize(period);
+
         const planning = await this.service.findByPeriod(period);
         console.log(JSON.stringify(planning+' '+period));
         return planning;

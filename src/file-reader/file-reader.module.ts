@@ -15,6 +15,7 @@ import { DispositionFieldService } from 'src/disposition-field/disposition-field
 import { Disposition } from 'src/disposition/disposition.model';
 import { DispositionModule } from 'src/disposition/disposition.module';
 import { DispositionService } from 'src/disposition/disposition.service';
+import { ForecastModule } from 'src/forecast/forecast.module';
 import { FuturInward } from 'src/future-invard/future-invard.model';
 import { FutureInvardModule } from 'src/future-invard/future-invard.module';
 import { FutureInvardService } from 'src/future-invard/future-invard.service';
@@ -44,6 +45,7 @@ import { FileReaderService } from './file-reader.service';
     PlanningFieldPositionModule,
     FutureInvardModule,
     PurchasePlanningModule,
+    ForecastModule,
     SequelizeModule.forFeature([
       Disposition,
       DispositionField,

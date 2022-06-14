@@ -40,5 +40,5 @@ export class Forecast extends Model {
     fourthP2: number;
     
     @Column
-    fourthp3: number;
+    fourthP3: number;
 }

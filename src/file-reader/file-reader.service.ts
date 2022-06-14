@@ -4,6 +4,8 @@ import { ArticleService } from 'src/article/article.service';
 import { CapacityPlanning } from 'src/capacity-planning/capacity-planning.model';
 import { CapacityPlanningService } from 'src/capacity-planning/capacity-planning.service';
 import { DispositionService } from 'src/disposition/disposition.service';
+import { Forecast } from 'src/forecast/forecast.model';
+import { ForecastService } from 'src/forecast/forecast.service';
 import { FutureInvardService } from 'src/future-invard/future-invard.service';
 import { OrdersInWorkInterface } from 'src/orders-in-work/orders-in-work.interface';
 import { OrdersInWorkService } from 'src/orders-in-work/orders-in-work.service';
@@ -20,7 +22,8 @@ export class FileReaderService {
         private dispoService: DispositionService,
         private capacityService: CapacityPlanningService,
         private futureInvardService: FutureInvardService,
-        private purchasePlanning: PurchasePlanningService
+        private purchasePlanning: PurchasePlanningService,
+        private forecastService: ForecastService,
     ) {}
 
     async initNewPeriod(json: any){ //TODO: Define Type
@@ -29,6 +32,13 @@ export class FileReaderService {
         const forecastP1 = json.results.forecast[0].$.p1;
         const forecastP2 = json.results.forecast[0].$.p2;
         const forecastP3 = json.results.forecast[0].$.p3;
+
+        await this.forecastService.update({
+            period,
+            firstP1: forecastP1,
+            firstP2: forecastP2,
+            firstP3: forecastP3,
+        });
         
         const dispoP1 = await this.dispoService.initialize(period, 1, forecastP1);
         const dispoP2 = await this.dispoService.initialize(period, 2, forecastP2);
@@ -43,7 +53,7 @@ export class FileReaderService {
             period
         );
 
-        await this.purchasePlanning.initialize(period);
+        //await this.purchasePlanning.initialize(period);
 
         return {
             P1: dispoP1,

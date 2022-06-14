@@ -9,8 +9,9 @@ export class ForecastService {
         private readonly model: typeof Forecast,
     ) {}
 
-    async create(template: any) {
-        await this.model.create(template);
+    async update(template: any) {
+        await this.model.upsert(template);
+        return await this.getByPeriod(template.period);
     }
 
     async getByPeriod(period: number) {

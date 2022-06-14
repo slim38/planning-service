@@ -10,7 +10,10 @@ export class ForecastController {
 
     @Post()
     async create(@Body() forecast) {
-        await this.service.create(forecast);
+        console.log(JSON.stringify(forecast));
+        const newForecast = await this.service.update(forecast);
+        console.log(JSON.stringify(newForecast));
+        return newForecast;
     }
 
     @Get()
