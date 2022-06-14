@@ -25,7 +25,11 @@ export class PurchasePlanningService {
         const masters = await this.masterService.findAll();
 
         //get Forecast TODO: Forecast-Model
-        const forecast = await this.forecastService.getByPeriod(period)[0];
+        const forecastArr = await this.forecastService.getByPeriod(period);
+
+        console.log('\n FORECAST:_______ \n'+JSON.stringify(forecastArr));
+
+        const forecast = forecastArr[0];
 
         let firstP1 = 350;
         let firstP2 = 350;
@@ -93,6 +97,16 @@ export class PurchasePlanningService {
             let totalDemand = firstDemand + secondDemand + thirdDemand + fourthDemand;
             const stock = m.article.amount;
             if (stock >= totalDemand) {
+                positions.push({
+                    period,
+                    firstDemand,
+                    secondDemand,
+                    thirdDemand,
+                    fourthDemand,
+                    orderAmount: 0,
+                    orderType: null,
+                    articleId: m.articleId
+                });
                 continue;
             }
 
@@ -103,6 +117,16 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/fourthDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
+                    positions.push({
+                        period,
+                        firstDemand,
+                        secondDemand,
+                        thirdDemand,
+                        fourthDemand,
+                        orderAmount: 0,
+                        orderType: null,
+                        articleId: m.articleId
+                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
@@ -138,6 +162,16 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/thirdDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
+                    positions.push({
+                        period,
+                        firstDemand,
+                        secondDemand,
+                        thirdDemand,
+                        fourthDemand,
+                        orderAmount: 0,
+                        orderType: null,
+                        articleId: m.articleId
+                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
@@ -173,6 +207,16 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/secondDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
+                    positions.push({
+                        period,
+                        firstDemand,
+                        secondDemand,
+                        thirdDemand,
+                        fourthDemand,
+                        orderAmount: 0,
+                        orderType: null,
+                        articleId: m.articleId
+                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
@@ -208,6 +252,16 @@ export class PurchasePlanningService {
                     availableDays += (orderAmount)/firstDemand;
                 }
                 if ((availableDays - m.deliveryTime - m.deviation) >= 1) {
+                    positions.push({
+                        period,
+                        firstDemand,
+                        secondDemand,
+                        thirdDemand,
+                        fourthDemand,
+                        orderAmount: 0,
+                        orderType: null,
+                        articleId: m.articleId
+                    });
                     continue;
                 }
                 if (availableDays < (m.deliveryTime + m.deviation)) {
