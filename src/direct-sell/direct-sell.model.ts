@@ -6,6 +6,7 @@ export class DirectSell extends Model {
     @Column
     period: 7;
 
+    @PrimaryKey
     @Column
     Produkt: number;
 

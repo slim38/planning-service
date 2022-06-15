@@ -89,6 +89,14 @@ export class FileWriterService {
     }
 
     private async writeWorkingtime(period) {
+        const planning = await this.capacityService.getPlanning(period);
 
+        let xmlStr = '<workingtimelist>';
+
+        for (const w of planning.fields) {
+            xmlStr += `<workingtime station="${w.workplace}" shift="${w.shifts}" overtime="${w.overtime}"/>`
+        }
+
+        xmlStr = '</workingtimelist>';
     }
 }
