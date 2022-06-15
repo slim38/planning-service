@@ -125,6 +125,40 @@ export class DispositionService {
         });
     }
 
+    async findByPeriod(period: number) {
+        return await this.model.findAll({
+            where: {
+                period
+            },
+            include: [
+                {
+                    model: DispositionField,
+                    include: [
+                        {
+                            model: DispositionField,
+                            include: [
+                                {
+                                    model: DispositionField,
+                                    include: [
+                                        {
+                                            model: DispositionField,
+                                            include: [
+                                                {
+                                                    model: DispositionField,
+                                                    
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        });
+    }
+
     async deleteByPeriod(period) {
         await this.model.destroy({
             where: {
