@@ -17,7 +17,8 @@ export class FileWriterService {
     ) {}
 
     async write(period: number) {
-        let xmlStr = await this.writeOrders(period);
+        let xmlStr = '<input><qualitycontrol type="no" losequantity="0" delay="0"/>';
+        xmlStr += await this.writeOrders(period);
         xmlStr += await this.writeProduction(period);
 
         console.log(xmlStr);
@@ -69,7 +70,7 @@ export class FileWriterService {
         let xmlStr = '<selldirect>';
 
         for (const s of sells) {
-            xmlStr += `<item article="${s.Produkt}" quantity="${s.Menge}" price="${s.Preis}" penalty="${s.Konventionalstrfe}"/>`
+            xmlStr += `<item article="${s.Produkt}" quantity="${s.Menge}" price="${s.Preis}" penalty="${s.Konventionalstrafe}"/>`
         }
 
         xmlStr += '</selldirect>'

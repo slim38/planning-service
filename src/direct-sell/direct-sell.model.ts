@@ -17,5 +17,5 @@ export class DirectSell extends Model {
     Menge: number;
 
     @Column
-    Konventionalstrfe: number;
+    Konventionalstrafe: number;
 }
