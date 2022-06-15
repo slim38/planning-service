@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Res, Response } from '@nestjs/common';
 import { FileWriterService } from './file-writer.service';
 
 @Controller('file-writer')
@@ -8,7 +8,9 @@ export class FileWriterController {
     ) {}
 
     @Get()
-    async writeFile(@Query('period') period: number) {
-        await this.service.write(period);
+    async writeFile(@Query('period') period: number, @Response() res) {
+        const xmlStr = await this.service.write(period);
+        res.set('Content-Type', 'text/xml');
+        res.send(xmlStr);
     }
 }

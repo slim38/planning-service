@@ -18,10 +18,18 @@ export class FileWriterService {
 
     async write(period: number) {
         let xmlStr = '<input><qualitycontrol type="no" losequantity="0" delay="0"/>';
+        
+        xmlStr += await this.writeSellwish(period);
+        xmlStr += await this.writeSellDirect(period);
         xmlStr += await this.writeOrders(period);
         xmlStr += await this.writeProduction(period);
+        xmlStr += await this.writeWorkingtime(period);
+
+        xmlStr += '</input>'
 
         console.log(xmlStr);
+
+        return xmlStr;
     }
 
     private async writeOrders(period: number) {
@@ -69,11 +77,18 @@ export class FileWriterService {
 
         let xmlStr = '<selldirect>';
 
+        if (sells.length === 0) {
+            xmlStr += `<item article="1" quantity="0" price="0" penalty="0"/>
+            <item article="2" quantity="0" price="0" penalty="0"/>
+            <item article="3" quantity="0" price="0" penalty="0"/>`
+        }
         for (const s of sells) {
             xmlStr += `<item article="${s.Produkt}" quantity="${s.Menge}" price="${s.Preis}" penalty="${s.Konventionalstrafe}"/>`
         }
 
-        xmlStr += '</selldirect>'
+        xmlStr += '</selldirect>';
+
+        return xmlStr;
     }
 
     private async writeSellwish(period) {
@@ -82,11 +97,15 @@ export class FileWriterService {
 
         let xmlStr = '<sellwish>';
 
-        xmlStr += `<item article="1" quantity="${wish.firstP1}"/>
-                   <item article="2" quantity="${wish.firstP2}"/>
-                   <item article="3" quantity="${wish.firstP3}"/>`
-
+        if (wish) {
+            xmlStr += `<item article="1" quantity="${wish.firstP1}"/>
+            <item article="2" quantity="${wish.firstP2}"/>
+            <item article="3" quantity="${wish.firstP3}"/>`
+        }
+        
         xmlStr += '</sellwish>';
+
+        return xmlStr;
     }
 
     private async writeWorkingtime(period) {
@@ -98,6 +117,8 @@ export class FileWriterService {
             xmlStr += `<workingtime station="${w.workplace}" shift="${w.shifts}" overtime="${w.overtime}"/>`
         }
 
-        xmlStr = '</workingtimelist>';
+        xmlStr += '</workingtimelist>';
+
+        return xmlStr;
     }
 }
