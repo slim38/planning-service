@@ -9,6 +9,7 @@ import { DirectSellController } from './direct-sell.controller';
   imports: [
     SequelizeModule.forFeature([DirectSell])
   ],
-  controllers: [DirectSellController]
+  controllers: [DirectSellController],
+  exports: [DirectSellService]
 })
 export class DirectSellModule {}

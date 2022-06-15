@@ -342,9 +342,9 @@ export class PurchasePlanningService {
     }
 
     async update(template) {
-        await this.model.upsert(template[0]);
+        await this.model.upsert(template);
 
-        for (const p of template[0].positions) {
+        for (const p of template.positions) {
             await this.positionService.update(p);
         }
     }

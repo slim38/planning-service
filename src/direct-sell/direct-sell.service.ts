@@ -39,4 +39,12 @@ export class DirectSellService {
             }
         });
     }
+
+    async findByPeriod(period: number) {
+        return await this.model.findAll({
+            where: {
+                period
+            }
+        })
+    }
 }
