@@ -12,6 +12,12 @@ export class DirectSellService {
     async create(template: any) {
         const period = template.period;
 
+        await this.model.destroy({
+            where: {
+                period
+            }
+        })
+
         await this.model.create({
             period,
             ...template.Direkt1
@@ -25,6 +31,12 @@ export class DirectSellService {
         await this.model.create({
             period,
             ...template.Direkt3
+        });
+
+        return await this.model.findAll({
+            where: {
+                period
+            }
         });
     }
 }
