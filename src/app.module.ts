@@ -46,6 +46,7 @@ import { PurchasePositionModel } from './purchase-position/purchase-position.mod
 import { ForecastModule } from './forecast/forecast.module';
 import { Forecast } from './forecast/forecast.model';
 import { FileWriterModule } from './file-writer/file-writer.module';
+import { DirectSell } from './direct-sell/direct-sell.model';
 
 @Module({
   imports: [
@@ -56,9 +57,26 @@ import { FileWriterModule } from './file-writer/file-writer.module';
       username: 'root',
       password: '',
       database: 'planning_db',
-      models: [Article, PurchasingPart, ProductionPart, WlWorkstation, OrdersInWork, Disposition, DispositionField,
-      Workplace, ProductionStep, CapacityPlanning, CapacityPlanningField, PlanningFieldPosition, FuturInward, PurchasePlanningModel,
-      PurchasePositionModel, PurchasePositionMasterModel, Forecast],
+      models: [
+        Article,
+        PurchasingPart,
+        ProductionPart,
+        WlWorkstation,
+        OrdersInWork,
+        Disposition,
+        DispositionField,
+        Workplace,
+        ProductionStep,
+        CapacityPlanning,
+        CapacityPlanningField,
+        PlanningFieldPosition,
+        FuturInward,
+        PurchasePlanningModel,
+        PurchasePositionModel,
+        PurchasePositionMasterModel,
+        Forecast,
+        DirectSell
+      ],
     }),
     ArticleModule,
     PurchasingPartModule,

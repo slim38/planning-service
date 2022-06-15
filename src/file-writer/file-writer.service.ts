@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DirectSellService } from 'src/direct-sell/direct-sell.service';
 import { DispositionField } from 'src/disposition-field/disposition-field.model';
 import { DispositionService } from 'src/disposition/disposition.service';
+import { ForecastService } from 'src/forecast/forecast.service';
 import { PurchasePlanningService } from 'src/purchase-planning/purchase-planning.service';
 
 @Injectable()
@@ -10,6 +11,7 @@ export class FileWriterService {
         private readonly purchaseService: PurchasePlanningService,
         private readonly dispoService: DispositionService,
         private readonly directSellService: DirectSellService,
+        private readonly forecastService: ForecastService,
     ) {}
 
     async write(period: number) {
@@ -62,10 +64,18 @@ export class FileWriterService {
     private async writeSellDirect(period) {
         const sells = await this.directSellService.findByPeriod(period);
 
-        let xmlStr = 'selldirect';
+        let xmlStr = '<selldirect>';
 
         for (const s of sells) {
             xmlStr += `<item article="${s.Produkt}" quantity="${s.Menge}" price="${s.Preis}" penalty="${s.Konventionalstrfe}"/>`
         }
+
+        xmlStr += '</selldirect>'
+    }
+
+    private async writeSellwish(period) {
+        const wishes = await this.forecastService.getByPeriod(7);
+
+        
     }
 }
