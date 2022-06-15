@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { PurchasePlanningService } from './purchase-planning.service';
 
 @Controller('purchase-planning')
@@ -14,5 +14,10 @@ export class PurchasePlanningController {
         const planning = await this.service.findByPeriod(period);
         console.log(JSON.stringify(planning+' '+period));
         return planning;
+    }
+
+    @Post()
+    async update(@Body() template) {
+        await this.service.update(template);
     }
 }

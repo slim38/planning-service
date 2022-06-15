@@ -12,4 +12,8 @@ export class PurchasePositionService {
     async bulkCreate(template: any[]) {
         return await this.model.bulkCreate(template).catch(err => console.log('\n \n'+JSON.stringify(err)));
     }
+
+    async update(template) {
+        await this.model.upsert(template);
+    }
 }

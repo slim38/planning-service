@@ -340,4 +340,12 @@ export class PurchasePlanningService {
             ]
         });
     }
+
+    async update(template) {
+        await this.model.upsert(template[0]);
+
+        for (const p of template[0].positions) {
+            await this.positionService.update(p);
+        }
+    }
 }
