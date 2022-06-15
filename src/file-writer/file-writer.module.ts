@@ -6,6 +6,8 @@ import { FileWriterController } from './file-writer.controller';
 import { DirectSellService } from 'src/direct-sell/direct-sell.service';
 import { DirectSellModule } from 'src/direct-sell/direct-sell.module';
 import { ForecastModule } from 'src/forecast/forecast.module';
+import { CapacityPlanning } from 'src/capacity-planning/capacity-planning.model';
+import { CapacityPlanningModule } from 'src/capacity-planning/capacity-planning.module';
 
 @Module({
   providers: [FileWriterService],
@@ -13,7 +15,8 @@ import { ForecastModule } from 'src/forecast/forecast.module';
     PurchasePlanningModule,
     DispositionModule,
     DirectSellModule,
-    ForecastModule
+    ForecastModule,
+    CapacityPlanningModule,
   ],
   controllers: [FileWriterController]
 })
