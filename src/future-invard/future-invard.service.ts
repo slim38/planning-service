@@ -11,7 +11,7 @@ export class FutureInvardService {
 
     async bulkCreate(template: any[]) {
         return await this.model.bulkCreate(template, {
-            updateOnDuplicate: []
+            updateOnDuplicate: ['mode']
         });
     }
 
