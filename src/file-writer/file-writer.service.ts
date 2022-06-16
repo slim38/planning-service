@@ -51,7 +51,10 @@ export class FileWriterService {
         let xmlStr = '<productionlist>';
         
         function writeChildren(child: DispositionField) {
-            xmlStr += `<production article="${child.articleId}" quantity="${child.productionOrderCount}"/>`;
+            if (child.productionOrderCount > 0) {
+                xmlStr += `<production article="${child.articleId}" quantity="${child.productionOrderCount}"/>`;
+            }
+            
             if (child.childFields) {
                 child.childFields.forEach(c => writeChildren(c));
             }
@@ -60,7 +63,10 @@ export class FileWriterService {
         const dispos = await this.dispoService.findByPeriod(period);
         
         for (const d of dispos) {
-            xmlStr += `<production article="${d.salesArticleId}" quantity="${d.productionOrderCount}"/>`;
+
+            if (d.productionOrderCount > 0) {
+                xmlStr += `<production article="${d.salesArticleId}" quantity="${d.productionOrderCount}"/>`;
+            }
 
             d.fields.forEach(c => writeChildren(c));
         }

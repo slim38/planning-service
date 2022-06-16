@@ -40,26 +40,6 @@ export class FileReaderService {
             firstP3: forecastP3,
         });
         
-        const dispoP1 = await this.dispoService.initialize(period, 1, forecastP1);
-        const dispoP2 = await this.dispoService.initialize(period, 2, forecastP2);
-        const dispoP3 = await this.dispoService.initialize(period, 3, forecastP3);
-
-        await this.capacityService.refresh(
-            [
-                dispoP1,
-                dispoP2,
-                dispoP3,
-            ],
-            period
-        );
-
-        //await this.purchasePlanning.initialize(period);
-
-        return {
-            P1: dispoP1,
-            P2: dispoP2,
-            P3: dispoP3
-        };
     }
 
     private async updateDatabase(json: any, period: number){ //TODO: Define Type
