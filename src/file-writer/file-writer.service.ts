@@ -5,6 +5,7 @@ import { DispositionField } from 'src/disposition-field/disposition-field.model'
 import { DispositionService } from 'src/disposition/disposition.service';
 import { ForecastService } from 'src/forecast/forecast.service';
 import { PurchasePlanningService } from 'src/purchase-planning/purchase-planning.service';
+import { OrderType } from 'src/purchase-position/purchase-position.model';
 
 @Injectable()
 export class FileWriterService {
@@ -38,7 +39,7 @@ export class FileWriterService {
         let xmlStr = '<orderslist>';
         for (const p of purchasePlanning[0].positions){
             if (p.orderAmount > 0) {
-                let modus = p.orderType + 4;
+                let modus = p.orderType === OrderType.Eil ? 4 : 5;
                 xmlStr += `<order article="${p.positionMaster.articleId}" quantity="${p.orderAmount}" modus="${modus}"/>`
             }
         }
