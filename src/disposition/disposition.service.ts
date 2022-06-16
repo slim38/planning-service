@@ -35,14 +35,15 @@ export class DispositionService {
         const waitingListOrderStock = article.waitingList.length > 0 ? article.waitingList[0].amount : 0;
         console.log(waitingListOrderStock);
         const ordersInWorkCount = article.ordersInWork.length > 0 ? article.ordersInWork[0].amount : 0;
-        const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStockDefault;
+        const plannedStock = currentStock;
+        const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStock;
 
         await this.model.create({
             id,
             period,
             salesArticleId: article.id,
             salesOrderCount,
-            plannedStock: plannedStockDefault,
+            plannedStock: plannedStock,
             currentStock,
             waitinglistOrderCount: waitingListOrderStock,
             ordersInWorkCount,
@@ -57,7 +58,8 @@ export class DispositionService {
                     const currentStock = child.amount;
                     const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0; //TODO: correct calculation
                     const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
-                    const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStockDefault;
+                    const plannedStock = currentStock;
+                    const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStock;
                     
                     const fieldId: string = v4();
 
@@ -66,7 +68,7 @@ export class DispositionService {
                             id: fieldId,
                             dispositionId: id,
                             salesOrderCount,
-                            plannedStock: plannedStockDefault,
+                            plannedStock: plannedStock,
                             currentStock,
                             waitinglistOrderCount: waitingListOrderStock,
                             ordersInWorkCount,

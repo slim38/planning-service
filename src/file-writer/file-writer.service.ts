@@ -36,14 +36,14 @@ export class FileWriterService {
     private async writeOrders(period: number) {
         const purchasePlanning = await this.purchaseService.findByPeriod(period);
 
-        let xmlStr = '<orderslist>';
+        let xmlStr = '<orderlist>';
         for (const p of purchasePlanning[0].positions){
             if (p.orderAmount > 0) {
                 let modus = p.orderType === OrderType.Eil ? 4 : 5;
                 xmlStr += `<order article="${p.positionMaster.articleId}" quantity="${p.orderAmount}" modus="${modus}"/>`
             }
         }
-        xmlStr += '</orderslist>'
+        xmlStr += '</orderlist>'
 
         return xmlStr;
     }
