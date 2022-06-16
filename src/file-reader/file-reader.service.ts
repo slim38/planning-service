@@ -74,7 +74,7 @@ export class FileReaderService {
     private extractArticlesFromJson(json: any){ //TODO: Define Type
         const articles: ArticleInterface[] = [];
 
-        json.results.warehousestock[0].article.forEach(article =>
+        json.results.warehousestock[0]?.article.forEach(article =>
             articles.push(article.$)
         );
 
@@ -84,7 +84,7 @@ export class FileReaderService {
     private extractOIWFromJson(json: any){ //TODO: Define Type
         const OIWs: OrdersInWorkInterface[] = [];
 
-        json.results.ordersinwork[0].workplace.forEach(OIW => {
+        json.results.ordersinwork[0]?.workplace.forEach(OIW => {
             const mappedOIW: OrdersInWorkInterface = {
                 id: OIW.$.id,
                 period: OIW.$.period,
@@ -105,7 +105,7 @@ export class FileReaderService {
     private extractWlWorkstationFromJson(json: any){ //TODO: Define Type
         const wlWorkstations: WlWorkstationInterface[] = [];
 
-        json.results.waitinglistworkstations[0].workplace.forEach(wp => {
+        json.results.waitinglistworkstations[0]?.workplace.forEach(wp => {
             if (wp.hasOwnProperty('waitinglist')){
                 wp.waitinglist.forEach(wl => {
                     const mappedWl: WlWorkstationInterface = {
@@ -131,7 +131,7 @@ export class FileReaderService {
     private extractInwards(json) {
         const inwards = [];
 
-        json.results.futureinwardstockmovement[0].order.forEach(element => {
+        json.results.futureinwardstockmovement[0]?.order.forEach(element => {
             inwards.push({
                 orderperiod: element.$.orderperiod,
                 id: element.$.id,
