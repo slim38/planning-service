@@ -10,7 +10,9 @@ export class FutureInvardService {
     ) {}
 
     async bulkCreate(template: any[]) {
-        return await this.model.bulkCreate(template);
+        return await this.model.bulkCreate(template, {
+            updateOnDuplicate: []
+        });
     }
 
     async deleteAll() {
