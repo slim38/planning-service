@@ -84,7 +84,7 @@ export class CapacityPlanningService {
             const capacityNeedPrev = oiwTime + wipTime;
             const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime;
             
-            let overtime = Math.ceil((totalCapacityNeed-2400)/5)
+            let overtime = Math.floor((totalCapacityNeed-2400)/5)
             if (overtime < 0) {
                 overtime = 0;
             }
