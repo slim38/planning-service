@@ -73,7 +73,7 @@ export class CapacityPlanningService {
                 }
 
                 if (article.waitingList) {
-                    totalSetUpTimePrev += productionStep.setupTime;
+                    totalSetUpTimePrev + productionStep.setupTime;
                 }
 
                 processTime += articleProcessTime;
@@ -82,7 +82,6 @@ export class CapacityPlanningService {
 
             const capacityNeedNew = processTime;
             const capacityNeedPrev = oiwTime + wipTime;
-            setUpTime += totalSetUpTimePrev;
             if (workplace.id <= 6 || workplace.id >= 14) {
                 setUpTime = setUpTime * 2;
             }
