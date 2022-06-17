@@ -37,6 +37,7 @@ export class FileWriterService {
         const purchasePlanning = await this.purchaseService.findByPeriod(period);
 
         let xmlStr = '<orderlist>';
+        
         for (const p of purchasePlanning[0].positions){
             if (p.orderAmount > 0) {
                 let modus = p.orderType === OrderType.Eil ? 4 : 5;
@@ -51,25 +52,32 @@ export class FileWriterService {
     private async writeProduction(period: number) {
         let xmlStr = '<productionlist>';
         
-        function writeChildren(child: DispositionField) {
+        function writeChildren(child: DispositionField, xmlArr) {
             if (child.productionOrderCount > 0) {
-                xmlStr += `<production article="${child.articleId}" quantity="${child.productionOrderCount}"/>`;
+                xmlArr.push(`<production article="${child.articleId}" quantity="${child.productionOrderCount}"/>`);
             }
             
             if (child.childFields) {
-                child.childFields.forEach(c => writeChildren(c));
+                child.childFields.forEach(c => writeChildren(c, xmlArr));
             }
         }
         
         const dispos = await this.dispoService.findByPeriod(period);
+
+        console.log(dispos);
         
         for (const d of dispos) {
 
-            if (d.productionOrderCount > 0) {
-                xmlStr += `<production article="${d.salesArticleId}" quantity="${d.productionOrderCount}"/>`;
-            }
+            const xmlArr = [];
 
-            d.fields.forEach(c => writeChildren(c));
+            if (d.productionOrderCount > 0) {
+                xmlArr.push(`<production article="${d.salesArticleId}" quantity="${d.productionOrderCount}"/>`);
+            }
+            d.fields.forEach(c => writeChildren(c, xmlArr));
+
+            for (let i = xmlArr.length - 1; i >= 0; i--){
+                xmlStr += xmlArr[i];
+            }
         }
 
         xmlStr += '</productionlist>';
@@ -77,6 +85,22 @@ export class FileWriterService {
         return xmlStr;
 
         //TODO: Duplikate entfernen, negative zu null
+    }
+
+    private async writeDispo(d) {
+        const fields = [];
+
+        function pushField(c) {
+            if (c.productionOrderCount > 0) {
+                fields.push(c);
+            }
+
+            c.childFields.forEach(c => pushField(c));
+        }
+
+        d.fields.forEach(f => pushField(f));
+
+        for (let i = fields.length; i >= 0; i--) {}
     }
 
     private async writeSellDirect(period) {

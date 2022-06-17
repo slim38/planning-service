@@ -53,7 +53,7 @@ export class CapacityPlanningService {
                     workplace: workplace.id,
                     articleId: productionStep.articleId,
                     processTime: articleProcessTime,
-                    setUpTime: productionStep.setupTime,
+                    setupTime: productionStep.setupTime,
                     planningFieldId: pfId
                 });
                 
