@@ -23,6 +23,7 @@ export class ForecastService {
         const period = template.period;
 
         await this.dispoService.deleteByPeriod(period);
+        await this.capacityService.deleteByPeriod(period);
         
         const dispoP1 = await this.dispoService.initialize(period, 1, forecastP1);
         const dispoP2 = await this.dispoService.initialize(period, 2, forecastP2);

@@ -73,7 +73,7 @@ export class CapacityPlanningService {
                 }
 
                 if (article.waitingList) {
-                    totalSetUpTimePrev + productionStep.setupTime;
+                    totalSetUpTimePrev += productionStep.setupTime;
                 }
 
                 processTime += articleProcessTime;
@@ -82,6 +82,13 @@ export class CapacityPlanningService {
 
             const capacityNeedNew = processTime;
             const capacityNeedPrev = oiwTime + wipTime;
+            setUpTime += totalSetUpTimePrev;
+            if (workplace.id <= 6 || workplace.id >= 14) {
+                setUpTime = setUpTime * 2;
+            }
+            else {
+                setUpTime = setUpTime * 3;
+            }
             const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime;
             
             let overtime = Math.floor((totalCapacityNeed-2400)/5)
