@@ -55,7 +55,7 @@ export class DispositionService {
         function createFields(article: Article, id: string, salesOrderCount: number, parentFieldId?: string) {
             article.childProductionArticles.forEach(
                 async (child) => {
-                    const currentStock = child.amount;
+                    const currentStock = child.id === 26 || child.id === 17 || child.id === 16 ? Math.floor(child.amount / 3) : child.amount;
                     const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0; //TODO: correct calculation
                     const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
                     const plannedStock = currentStock;

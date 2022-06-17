@@ -70,7 +70,7 @@ export class FileWriterService {
 
             const xmlArr = [];
 
-            if (d.productionOrderCount > 0) {
+            if (d.productionOrderCount ) {
                 xmlArr.push(`<production article="${d.salesArticleId}" quantity="${d.productionOrderCount}"/>`);
             }
             d.fields.forEach(c => writeChildren(c, xmlArr));
