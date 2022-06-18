@@ -13,7 +13,7 @@ export class BatchService {
     ) {}
 
     async create(templ) {
-        const period = templ.period;
+        const period = templ.article1.period;
         await this.model.destroy({
             where: {
                 period
