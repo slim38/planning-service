@@ -8,6 +8,7 @@ import { DirectSellModule } from 'src/direct-sell/direct-sell.module';
 import { ForecastModule } from 'src/forecast/forecast.module';
 import { CapacityPlanning } from 'src/capacity-planning/capacity-planning.model';
 import { CapacityPlanningModule } from 'src/capacity-planning/capacity-planning.module';
+import { BatchModule } from 'src/batch/batch.module';
 
 @Module({
   providers: [FileWriterService],
@@ -17,6 +18,7 @@ import { CapacityPlanningModule } from 'src/capacity-planning/capacity-planning.
     DirectSellModule,
     ForecastModule,
     CapacityPlanningModule,
+    BatchModule
   ],
   controllers: [FileWriterController]
 })

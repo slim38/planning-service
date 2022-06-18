@@ -47,6 +47,8 @@ import { ForecastModule } from './forecast/forecast.module';
 import { Forecast } from './forecast/forecast.model';
 import { FileWriterModule } from './file-writer/file-writer.module';
 import { DirectSell } from './direct-sell/direct-sell.model';
+import { BatchModule } from './batch/batch.module';
+import { BatchPositionModule } from './batch-position/batch-position.module';
 
 @Module({
   imports: [
@@ -96,6 +98,8 @@ import { DirectSell } from './direct-sell/direct-sell.model';
     FutureInvardModule,
     ForecastModule,
     FileWriterModule,
+    BatchModule,
+    BatchPositionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

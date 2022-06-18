@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { BatchService } from 'src/batch/batch.service';
 import { CapacityPlanningService } from 'src/capacity-planning/capacity-planning.service';
 import { DirectSellService } from 'src/direct-sell/direct-sell.service';
 import { DispositionField } from 'src/disposition-field/disposition-field.model';
@@ -15,6 +16,7 @@ export class FileWriterService {
         private readonly directSellService: DirectSellService,
         private readonly forecastService: ForecastService,
         private readonly capacityService: CapacityPlanningService,
+        private readonly batchService: BatchService,
     ) {}
 
     async write(period: number) {
@@ -23,7 +25,7 @@ export class FileWriterService {
         xmlStr += await this.writeSellwish(period);
         xmlStr += await this.writeSellDirect(period);
         xmlStr += await this.writeOrders(period);
-        xmlStr += await this.writeProduction(period);
+        xmlStr += await this.writeProd(period);
         xmlStr += await this.writeWorkingtime(period);
 
         xmlStr += '</input>'
@@ -85,6 +87,54 @@ export class FileWriterService {
         return xmlStr;
 
         //TODO: Duplikate entfernen, negative zu null
+    }
+
+    private async writeProd(period) {
+        const batches = await this.batchService.getByPeriod(period);
+        const batch = batches[0]
+        const xmlArr = [];
+
+        for (let d of batch.dispos) {
+            if (d.position1 > 0) {
+                xmlArr[d.position1] = `<production article="${d.article}" quantity="${d.amount1}"/>`;
+            }
+            if (d.position2 > 0) {
+                xmlArr[d.position2] = `<production article="${d.article}" quantity="${d.amount2}"/>`;
+            }
+        }
+
+        let arrIdx = 0;
+        let dispoIdx1 = 0;
+        let dispoIdx2 = 0;
+
+        while (dispoIdx1 < batch.dispos.length && dispoIdx2 < batch.dispos.length) {
+            if (batch.dispos[dispoIdx1].position1 <= 0) {
+                if (!xmlArr[arrIdx]) {
+                    xmlArr[arrIdx] = `<production article="${batch.dispos[dispoIdx1].article}" quantity="${batch.dispos[dispoIdx1].amount1}"/>`;
+                    dispoIdx1++;
+                }
+                arrIdx++;
+            } else {
+                dispoIdx1++;
+            }
+            if (batch.dispos[dispoIdx2].position2 <= 0) {
+                if (!xmlArr[arrIdx]) {
+                    xmlArr[arrIdx] = `<production article="${batch.dispos[dispoIdx2].article}" quantity="${batch.dispos[dispoIdx2].amount2}"/>`;
+                    dispoIdx2++;
+                }
+                arrIdx++;
+            } else {
+                dispoIdx2++;
+            }
+        }
+
+        let xmlStr = '<productionlist>';
+        for (let s of xmlArr) {
+            xmlStr += s;
+        }
+        xmlStr += '</productionlist>';
+
+        return xmlStr;
     }
 
     private async writeDispo(d) {
