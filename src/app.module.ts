@@ -49,6 +49,8 @@ import { FileWriterModule } from './file-writer/file-writer.module';
 import { DirectSell } from './direct-sell/direct-sell.model';
 import { BatchModule } from './batch/batch.module';
 import { BatchPositionModule } from './batch-position/batch-position.module';
+import { Batch } from './batch/batch.model';
+import { BatchPosition } from './batch-position/batch-position.model';
 
 @Module({
   imports: [
@@ -77,7 +79,9 @@ import { BatchPositionModule } from './batch-position/batch-position.module';
         PurchasePositionModel,
         PurchasePositionMasterModel,
         Forecast,
-        DirectSell
+        DirectSell,
+        Batch,
+        BatchPosition
       ],
     }),
     ArticleModule,
