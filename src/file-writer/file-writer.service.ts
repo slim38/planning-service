@@ -120,24 +120,24 @@ export class FileWriterService {
 
             i++;
         }
+        let help;
 
-        let min = 0;
-
+        console.log(posArr);
         for (let j = 0; j < posArr.length; j++) {
-            min = j;
-            for (let i = 0; i < posArr.length; i++) {
-                if (posArr[i].position < posArr[min].position){
-                    const help = posArr[min];
-                    posArr[min] = posArr[i];
-                    posArr[i] = help;
+            for (let i = j; i < posArr.length; i++) {
+                if (posArr[i].position < posArr[j].position){
+                    help = posArr[i];
+                    posArr[i] = posArr[j];
+                    posArr[j] = help;
                 }
             }
+            console.log('#'+posArr[j].position+' '+posArr[j].article);
         }
 
         let xmlStr = '<productionlist>';
 
-        for (let p of posArr) {
-            xmlStr += `<production article="${p.article}" quantity="${p.amount}"/>`
+        for (let i = 0; i<posArr.length; i++) {
+            xmlStr += `<production article="${posArr[i].article}" quantity="${posArr[i].amount}"/>`
         }
 
         xmlStr += '</productionlist>';
