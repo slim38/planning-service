@@ -6,7 +6,7 @@ import { BatchPositionService } from './batch-position.service';
 @Module({
   providers: [BatchPositionService],
   imports: [
-    SequelizeModule.forFeature([BatchPosition])
+    SequelizeModule.forFeature([BatchPosition]),
   ],
   exports: [BatchPositionService]
 })

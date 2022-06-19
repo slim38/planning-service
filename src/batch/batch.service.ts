@@ -25,6 +25,7 @@ export class BatchService {
         const batchPos = Object.entries(templ.dispo);
         
         for (let [key, value] of batchPos) {
+            console.log(value);
             await this.positionService.upsert(value);
         }
     }

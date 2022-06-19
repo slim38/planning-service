@@ -39,11 +39,13 @@ export class FileWriterService {
         const purchasePlanning = await this.purchaseService.findByPeriod(period);
 
         let xmlStr = '<orderlist>';
-        
-        for (const p of purchasePlanning[0].positions){
-            if (p.orderAmount > 0) {
-                let modus = p.orderType === OrderType.Eil ? 4 : 5;
-                xmlStr += `<order article="${p.positionMaster.articleId}" quantity="${p.orderAmount}" modus="${modus}"/>`
+
+        if (purchasePlanning[0]){
+            for (const p of purchasePlanning[0].positions){
+                if (p.orderAmount > 0) {
+                    let modus = p.orderType === OrderType.Eil ? 4 : 5;
+                    xmlStr += `<order article="${p.positionMaster.articleId}" quantity="${p.orderAmount}" modus="${modus}"/>`
+                }
             }
         }
         xmlStr += '</orderlist>'
@@ -92,46 +94,52 @@ export class FileWriterService {
     private async writeProd(period) {
         const batches = await this.batchService.getByPeriod(period);
         const batch = batches[0]
+        console.log(batch.dispos);
         const xmlArr = [];
+        const posArr = [];
 
-        for (let d of batch.dispos) {
-            if (d.position1 > 0) {
-                xmlArr[d.position1] = `<production article="${d.article}" quantity="${d.amount1}"/>`;
+        let i = 0;
+
+        while (i < batch.dispos.length) {
+            console.log(batch.dispos[i].amount1)
+            if (batch.dispos[i].amount1 > 0) {
+                posArr.push({
+                    article: batch.dispos[i].article,
+                    amount:  batch.dispos[i].amount1,
+                    position: batch.dispos[i].position1
+                });
             }
-            if (d.position2 > 0) {
-                xmlArr[d.position2] = `<production article="${d.article}" quantity="${d.amount2}"/>`;
+
+            if (batch.dispos[i].amount2 > 0) {
+                posArr.push({
+                    article: batch.dispos[i].article,
+                    amount:  batch.dispos[i].amount2,
+                    position: batch.dispos[i].position2
+                });
             }
+
+            i++;
         }
 
-        let arrIdx = 0;
-        let dispoIdx1 = 0;
-        let dispoIdx2 = 0;
+        let min = 0;
 
-        while (dispoIdx1 < batch.dispos.length && dispoIdx2 < batch.dispos.length) {
-            if (batch.dispos[dispoIdx1].position1 <= 0) {
-                if (!xmlArr[arrIdx]) {
-                    xmlArr[arrIdx] = `<production article="${batch.dispos[dispoIdx1].article}" quantity="${batch.dispos[dispoIdx1].amount1}"/>`;
-                    dispoIdx1++;
+        for (let j = 0; j < posArr.length; j++) {
+            min = j;
+            for (let i = 0; i < posArr.length; i++) {
+                if (posArr[i].position < posArr[min].position){
+                    const help = posArr[min];
+                    posArr[min] = posArr[i];
+                    posArr[i] = help;
                 }
-                arrIdx++;
-            } else {
-                dispoIdx1++;
-            }
-            if (batch.dispos[dispoIdx2].position2 <= 0) {
-                if (!xmlArr[arrIdx]) {
-                    xmlArr[arrIdx] = `<production article="${batch.dispos[dispoIdx2].article}" quantity="${batch.dispos[dispoIdx2].amount2}"/>`;
-                    dispoIdx2++;
-                }
-                arrIdx++;
-            } else {
-                dispoIdx2++;
             }
         }
 
         let xmlStr = '<productionlist>';
-        for (let s of xmlArr) {
-            xmlStr += s;
+
+        for (let p of posArr) {
+            xmlStr += `<production article="${p.article}" quantity="${p.amount}"/>`
         }
+
         xmlStr += '</productionlist>';
 
         return xmlStr;
@@ -193,9 +201,11 @@ export class FileWriterService {
         const planning = await this.capacityService.getPlanning(period);
 
         let xmlStr = '<workingtimelist>';
-
-        for (const w of planning.fields) {
-            xmlStr += `<workingtime station="${w.workplace}" shift="${w.shifts}" overtime="${w.overtime}"/>`
+        
+        if (planning) {
+            for (const w of planning.fields) {
+                xmlStr += `<workingtime station="${w.workplace}" shift="${w.shifts}" overtime="${w.overtime}"/>`
+            }
         }
 
         xmlStr += '</workingtimelist>';

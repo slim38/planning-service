@@ -12,4 +12,12 @@ export class BatchPositionService {
     async upsert(templ) {
         await this.model.upsert(templ);
     }
+
+    async deleteByPeriod(period) {
+        await this.model.destroy({
+            where: {
+                period
+            }
+        });
+    }
 }
