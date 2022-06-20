@@ -4,7 +4,7 @@ import { Column, Model, PrimaryKey, Table } from "sequelize-typescript";
 export class DirectSell extends Model {
     @PrimaryKey
     @Column
-    period: 7;
+    period: number;
 
     @PrimaryKey
     @Column

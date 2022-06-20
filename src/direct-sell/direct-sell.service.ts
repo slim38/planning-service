@@ -18,20 +18,26 @@ export class DirectSellService {
             }
         })
 
-        await this.model.create({
-            period,
-            ...template.Direkt1
-        });
+        if (template.Direkt1.Produkt) {
+            await this.model.create({
+                period,
+                ...template.Direkt1
+            });
+        }
 
-        await this.model.create({
-            period,
-            ...template.Direkt2
-        });
+        if (template.Direkt2.Produkt) {
+            await this.model.create({
+                period,
+                ...template.Direkt2
+            });
+        }
 
-        await this.model.create({
-            period,
-            ...template.Direkt3
-        });
+        if (template.Direkt3.Produkt) {
+            await this.model.create({
+                period,
+                ...template.Direkt3
+            });
+        }
 
         return await this.model.findAll({
             where: {
