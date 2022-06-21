@@ -181,4 +181,10 @@ export class CapacityPlanningService {
             },
         });
     }
+
+    async updateFields(template: any[]) {
+        for (let t of template) {
+            await this.planningFieldService.update(t);
+        }
+    }
 }

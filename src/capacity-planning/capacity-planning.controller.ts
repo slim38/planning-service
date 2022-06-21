@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CapacityPlanningService } from './capacity-planning.service';
 
 @Controller('capacity-planning')
@@ -12,5 +12,10 @@ export class CapacityPlanningController {
         const planning = await this.service.getPlanning(period);
         console.log(JSON.stringify(planning+' '+period));
         return planning;
+    }
+
+    @Post()
+    async update(@Body() temp: any[]) {
+        await this.service.updateFields(temp);
     }
 }

@@ -22,4 +22,13 @@ export class CapacityPlanningFieldService {
             },
         });
     }
+
+    async update(temp) {
+        await this.model.update(temp, {
+            where: {
+                planningPeriod: temp.period,
+                workplace: temp.workplace
+            }
+        })
+    }
 }
