@@ -17,5 +17,8 @@ export class CapacityPlanningController {
     @Post()
     async update(@Body() temp: any[]) {
         await this.service.updateFields(temp);
+        return {
+            message: 'Success'
+        }
     }
 }
