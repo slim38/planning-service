@@ -183,8 +183,10 @@ export class CapacityPlanningService {
     }
 
     async updateFields(template: any[]) {
-        for (let t of template) {
-            await this.planningFieldService.update(t);
+        const tempArr = Object.entries(template);
+        
+        for (let [key, value] of tempArr) {
+            await this.planningFieldService.update(value);
         }
     }
 }
