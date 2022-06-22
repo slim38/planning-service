@@ -17,6 +17,8 @@ export class AppController {
 
   @Get()
   async getHello(): Promise<string>{
+
+
     await this.productionPartService.create(1, 26);
     await this.productionPartService.create(1, 51);
     
@@ -69,6 +71,296 @@ export class AppController {
     await this.workplaceService.create({id:13});
     await this.workplaceService.create({id:14});
     await this.workplaceService.create({id:15});
+
+    await this.purchasePositionMasterService.create({
+      articleId: 21,
+      deliveryTime: 1.8,
+      deviation: 0.4,
+      prodOneDemand: 1,
+      prodTwoDemand: 0,
+      prodThreeDemand: 0,
+      discAmount: 300,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 22,
+      deliveryTime: 1.7,
+      deviation: 0.4,
+      prodOneDemand: 0,
+      prodTwoDemand: 1,
+      prodThreeDemand: 0,
+      discAmount: 300,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 23,
+      deliveryTime: 1.2,
+      deviation: 0.2,
+      prodOneDemand: 0,
+      prodTwoDemand: 0,
+      prodThreeDemand: 1,
+      discAmount: 300,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 24,
+      deliveryTime: 3.2,
+      deviation: 0.3,
+      prodOneDemand: 7,
+      prodTwoDemand: 7,
+      prodThreeDemand: 7,
+      discAmount: 6100,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 25,
+      deliveryTime: 0.9,
+      deviation: 0.2,
+      prodOneDemand: 4,
+      prodTwoDemand: 4,
+      prodThreeDemand: 4,
+      discAmount: 3600,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 27,
+      deliveryTime: 0.9,
+      deviation: 0.2,
+      prodOneDemand: 2,
+      prodTwoDemand: 2,
+      prodThreeDemand: 2,
+      discAmount: 1800,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 28,
+      deliveryTime: 1.7,
+      deviation: 0.4,
+      prodOneDemand: 4,
+      prodTwoDemand: 5,
+      prodThreeDemand: 6,
+      discAmount: 4500,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 32,
+      deliveryTime: 2.1,
+      deviation: 0.5,
+      prodOneDemand: 3,
+      prodTwoDemand: 3,
+      prodThreeDemand: 3,
+      discAmount: 2700,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 33,
+      deliveryTime: 1.9,
+      deviation: 0.5,
+      prodOneDemand: 0,
+      prodTwoDemand: 0,
+      prodThreeDemand: 2,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 34,
+      deliveryTime: 1.6,
+      deviation: 0.3,
+      prodOneDemand: 0,
+      prodTwoDemand: 0,
+      prodThreeDemand: 72,
+      discAmount: 22000,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 35,
+      deliveryTime: 2.2,
+      deviation: 0.4,
+      prodOneDemand: 4,
+      prodTwoDemand: 4,
+      prodThreeDemand: 4,
+      discAmount: 3600,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 36,
+      deliveryTime: 1.2,
+      deviation: 0.1,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 37,
+      deliveryTime: 1.5,
+      deviation: 0.3,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 38,
+      deliveryTime: 1.7,
+      deviation: 0.4,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 300,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 39,
+      deliveryTime: 1.5,
+      deviation: 0.3,
+      prodOneDemand: 2,
+      prodTwoDemand: 2,
+      prodThreeDemand: 2,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 40,
+      deliveryTime: 1.7,
+      deviation: 0.2,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 41,
+      deliveryTime: 0.9,
+      deviation: 0.2,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 42,
+      deliveryTime: 1.2,
+      deviation: 0.3,
+      prodOneDemand: 2,
+      prodTwoDemand: 2,
+      prodThreeDemand: 2,
+      discAmount: 1800,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 43,
+      deliveryTime: 2.0,
+      deviation: 0.5,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 1900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 44,
+      deliveryTime: 1,
+      deviation: 0.2,
+      prodOneDemand: 3,
+      prodTwoDemand: 3,
+      prodThreeDemand: 3,
+      discAmount: 2700,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 45,
+      deliveryTime: 1.7,
+      deviation: 0.3,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 46,
+      deliveryTime: 0.9,
+      deviation: 0.3,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 47,
+      deliveryTime: 1.1,
+      deviation: 0.1,
+      prodOneDemand: 1,
+      prodTwoDemand: 1,
+      prodThreeDemand: 1,
+      discAmount: 900,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 48,
+      deliveryTime: 1,
+      deviation: 0.2,
+      prodOneDemand: 2,
+      prodTwoDemand: 2,
+      prodThreeDemand: 2,
+      discAmount: 1800,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 52,
+      deliveryTime: 1.6,
+      deviation: 0.4,
+      prodOneDemand: 2,
+      prodTwoDemand: 0,
+      prodThreeDemand: 0,
+      discAmount: 600,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 53,
+      deliveryTime: 1.6,
+      deviation: 0.2,
+      prodOneDemand: 72,
+      prodTwoDemand: 0,
+      prodThreeDemand: 0,
+      discAmount: 22000,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 57,
+      deliveryTime: 1.7,
+      deviation: 0.3,
+      prodOneDemand: 0,
+      prodTwoDemand: 2,
+      prodThreeDemand: 0,
+      discAmount: 600,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 58,
+      deliveryTime: 1.6,
+      deviation: 0.5,
+      prodOneDemand: 0,
+      prodTwoDemand: 72,
+      prodThreeDemand: 0,
+      discAmount: 22000,
+    });
+
+    await this.purchasePositionMasterService.create({
+      articleId: 59,
+      deliveryTime: 0.7,
+      deviation: 0.2,
+      prodOneDemand: 2,
+      prodTwoDemand: 2,
+      prodThreeDemand: 2,
+      discAmount: 1800,
+    });
 
     await this.prodductionStepService.create({
       workplace: 1,
@@ -573,299 +865,6 @@ export class AppController {
       processTime: 3,
       setupTime: 15,
     });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 21,
-      deliveryTime: 1.8,
-      deviation: 0.4,
-      prodOneDemand: 1,
-      prodTwoDemand: 0,
-      prodThreeDemand: 0,
-      discAmount: 300,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 22,
-      deliveryTime: 1.7,
-      deviation: 0.4,
-      prodOneDemand: 0,
-      prodTwoDemand: 1,
-      prodThreeDemand: 0,
-      discAmount: 300,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 23,
-      deliveryTime: 1.2,
-      deviation: 0.2,
-      prodOneDemand: 0,
-      prodTwoDemand: 0,
-      prodThreeDemand: 1,
-      discAmount: 300,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 24,
-      deliveryTime: 3.2,
-      deviation: 0.3,
-      prodOneDemand: 7,
-      prodTwoDemand: 7,
-      prodThreeDemand: 7,
-      discAmount: 6100,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 25,
-      deliveryTime: 0.9,
-      deviation: 0.2,
-      prodOneDemand: 4,
-      prodTwoDemand: 4,
-      prodThreeDemand: 4,
-      discAmount: 3600,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 27,
-      deliveryTime: 0.9,
-      deviation: 0.2,
-      prodOneDemand: 2,
-      prodTwoDemand: 2,
-      prodThreeDemand: 2,
-      discAmount: 1800,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 28,
-      deliveryTime: 1.7,
-      deviation: 0.4,
-      prodOneDemand: 4,
-      prodTwoDemand: 5,
-      prodThreeDemand: 6,
-      discAmount: 4500,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 32,
-      deliveryTime: 2.1,
-      deviation: 0.5,
-      prodOneDemand: 3,
-      prodTwoDemand: 3,
-      prodThreeDemand: 3,
-      discAmount: 2700,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 33,
-      deliveryTime: 1.9,
-      deviation: 0.5,
-      prodOneDemand: 0,
-      prodTwoDemand: 0,
-      prodThreeDemand: 2,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 34,
-      deliveryTime: 1.6,
-      deviation: 0.3,
-      prodOneDemand: 0,
-      prodTwoDemand: 0,
-      prodThreeDemand: 72,
-      discAmount: 22000,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 35,
-      deliveryTime: 2.2,
-      deviation: 0.4,
-      prodOneDemand: 4,
-      prodTwoDemand: 4,
-      prodThreeDemand: 4,
-      discAmount: 3600,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 36,
-      deliveryTime: 1.2,
-      deviation: 0.1,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 37,
-      deliveryTime: 1.5,
-      deviation: 0.3,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 38,
-      deliveryTime: 1.7,
-      deviation: 0.4,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 300,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 39,
-      deliveryTime: 1.5,
-      deviation: 0.3,
-      prodOneDemand: 2,
-      prodTwoDemand: 2,
-      prodThreeDemand: 2,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 40,
-      deliveryTime: 1.7,
-      deviation: 0.2,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 41,
-      deliveryTime: 0.9,
-      deviation: 0.2,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 42,
-      deliveryTime: 1.2,
-      deviation: 0.3,
-      prodOneDemand: 2,
-      prodTwoDemand: 2,
-      prodThreeDemand: 2,
-      discAmount: 1800,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 43,
-      deliveryTime: 2.0,
-      deviation: 0.5,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 1900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 44,
-      deliveryTime: 1,
-      deviation: 0.2,
-      prodOneDemand: 3,
-      prodTwoDemand: 3,
-      prodThreeDemand: 3,
-      discAmount: 2700,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 45,
-      deliveryTime: 1.7,
-      deviation: 0.3,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 46,
-      deliveryTime: 0.9,
-      deviation: 0.3,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 47,
-      deliveryTime: 1.1,
-      deviation: 0.1,
-      prodOneDemand: 1,
-      prodTwoDemand: 1,
-      prodThreeDemand: 1,
-      discAmount: 900,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 48,
-      deliveryTime: 1,
-      deviation: 0.2,
-      prodOneDemand: 2,
-      prodTwoDemand: 2,
-      prodThreeDemand: 2,
-      discAmount: 1800,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 52,
-      deliveryTime: 1.6,
-      deviation: 0.4,
-      prodOneDemand: 2,
-      prodTwoDemand: 0,
-      prodThreeDemand: 0,
-      discAmount: 600,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 53,
-      deliveryTime: 1.6,
-      deviation: 0.2,
-      prodOneDemand: 72,
-      prodTwoDemand: 0,
-      prodThreeDemand: 0,
-      discAmount: 22000,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 57,
-      deliveryTime: 1.7,
-      deviation: 0.3,
-      prodOneDemand: 0,
-      prodTwoDemand: 2,
-      prodThreeDemand: 0,
-      discAmount: 600,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 58,
-      deliveryTime: 1.6,
-      deviation: 0.5,
-      prodOneDemand: 0,
-      prodTwoDemand: 72,
-      prodThreeDemand: 0,
-      discAmount: 22000,
-    });
-
-    await this.purchasePositionMasterService.create({
-      articleId: 59,
-      deliveryTime: 0.7,
-      deviation: 0.2,
-      prodOneDemand: 2,
-      prodTwoDemand: 2,
-      prodThreeDemand: 2,
-      discAmount: 1800,
-    });
-
-
-
 
     return this.appService.getHello();
   }
