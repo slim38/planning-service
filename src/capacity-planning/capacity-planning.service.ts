@@ -82,7 +82,7 @@ export class CapacityPlanningService {
 
             const capacityNeedNew = processTime;
             const capacityNeedPrev = oiwTime + wipTime;
-            
+
             const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime;
             
             const cap = 5000;
@@ -118,8 +118,8 @@ export class CapacityPlanningService {
                 capacityNeedPrev,
                 totalCapacityNeed,
                 totalSetUpTimePrev,
-                ot,
-                shift
+                overtime: ot,
+                shifts: shift
             });
         };
 
