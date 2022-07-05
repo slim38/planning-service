@@ -90,12 +90,29 @@ export class CapacityPlanningService {
             }
             const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime;
             
-            let overtime = Math.floor((totalCapacityNeed-2400)/5)
-            if (overtime < 0) {
-                overtime = 0;
+            const cap = 5000;
+            const capDay = cap/5;
+
+            let shift = 1;
+            let ot = 0;
+
+            if (capDay > 480) {
+                ot = capDay - 480;
             }
-            
-            let shifts = Math.floor(overtime/241) + 1;
+
+            if (ot > 240) {
+                ot = 0;
+                shift = 2;
+            }
+
+            if (capDay > 960) {
+                ot = capDay - 960;
+            }
+
+            if (ot > 240) {
+                ot = 0;
+                shift = 3;
+            }
 
             planningFields.push({
                 id: pfId,
@@ -106,8 +123,8 @@ export class CapacityPlanningService {
                 capacityNeedPrev,
                 totalCapacityNeed,
                 totalSetUpTimePrev,
-                overtime,
-                shifts
+                ot,
+                shift
             });
         };
 

@@ -52,14 +52,17 @@ export class DispositionService {
 
         const fields = [];
 
-        function createFields(article: Article, id: string, salesOrderCount: number, parentFieldId?: string) {
+        function createFields(article: Article, id: string, salesOrderCount: number, wl: number, parentFieldId?: string) {
             article.childProductionArticles.forEach(
                 async (child) => {
                     const currentStock = child.id === 26 || child.id === 17 || child.id === 16 ? Math.floor(child.amount / 3) : child.amount;
                     const waitingListOrderStock = child.waitingList.length > 0 ? child.waitingList[0].amount : 0; //TODO: correct calculation
                     const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
                     const plannedStock = currentStock;
-                    const productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStock;
+                    let productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStock;
+                    if (wl) {
+                        productionOrderCount += wl;
+                    }
                     
                     const fieldId: string = v4();
 
@@ -79,13 +82,13 @@ export class DispositionService {
                     );
     
                     if (child.childProductionArticles.length > 0) {
-                        createFields(child, null, productionOrderCount, fieldId);
+                        createFields(child, null, productionOrderCount, waitingListOrderStock, fieldId);
                     }
                 }
             )
         }
         
-        createFields(article, id, productionOrderCount);
+        createFields(article, id, productionOrderCount, waitingListOrderStock);
 
         await this.dispositionFieldService.bulkCreate(fields);
 
