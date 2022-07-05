@@ -85,7 +85,7 @@ export class CapacityPlanningService {
 
             const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime;
             
-            const cap = 5000;
+            const cap = totalCapacityNeed;
             const capDay = cap/5;
 
             let shift = 1;
