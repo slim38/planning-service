@@ -118,8 +118,8 @@ export class CapacityPlanningService {
                 capacityNeedPrev,
                 totalCapacityNeed,
                 totalSetUpTimePrev,
-                overtime: Math.floor(ot),
-                shifts: Math.floor(shift)
+                overtime: Math.ceil(ot),
+                shifts: shift
             });
         };
 
