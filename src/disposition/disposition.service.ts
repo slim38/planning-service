@@ -60,8 +60,10 @@ export class DispositionService {
                     const ordersInWorkCount = child.ordersInWork.length > 0 ? child.ordersInWork[0].amount : 0;
                     const plannedStock = currentStock;
                     let productionOrderCount = salesOrderCount - waitingListOrderStock - ordersInWorkCount - currentStock + plannedStock;
+                    let socNew = salesOrderCount;
                     if (wl) {
                         productionOrderCount += wl;
+                        socNew += wl;
                     }
                     
                     const fieldId: string = v4();
@@ -70,7 +72,7 @@ export class DispositionService {
                         {
                             id: fieldId,
                             dispositionId: id,
-                            salesOrderCount,
+                            salesOrderCount: socNew,
                             plannedStock: plannedStock,
                             currentStock,
                             waitinglistOrderCount: waitingListOrderStock,
