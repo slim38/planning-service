@@ -73,7 +73,7 @@ export class CapacityPlanningService {
                 }
 
                 if (article.waitingList?.length > 0) {
-                    totalSetUpTimePrev + productionStep.setupTime;
+                    totalSetUpTimePrev += productionStep.setupTime;
                 }
 
                 processTime += articleProcessTime;
