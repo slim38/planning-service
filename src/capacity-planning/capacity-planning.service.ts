@@ -83,7 +83,7 @@ export class CapacityPlanningService {
             const capacityNeedNew = processTime;
             const capacityNeedPrev = oiwTime + wipTime;
 
-            const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime;
+            const totalCapacityNeed = capacityNeedNew + capacityNeedPrev + setUpTime + totalSetUpTimePrev;
             
             const cap = totalCapacityNeed;
             const capDay = cap/5;
