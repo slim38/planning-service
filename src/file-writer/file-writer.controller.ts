@@ -8,8 +8,14 @@ export class FileWriterController {
     ) {}
 
     @Get()
-    async writeFile(@Query('period') period: number, @Response() res) {
-        const xmlStr = await this.service.write(period);
+    async writeFile(
+        @Query('period') period: number,
+        @Query('p1') p1: number,
+        @Query('p2') p2: number,
+        @Query('p3') p3: number,
+        @Response() res,
+    ) {
+        const xmlStr = await this.service.write(period, p1, p2, p3);
         res.set('Content-Type', 'text/xml');
         res.send(xmlStr);
     }

@@ -19,10 +19,10 @@ export class FileWriterService {
         private readonly batchService: BatchService,
     ) {}
 
-    async write(period: number) {
+    async write(period: number, p1, p2, p3) {
         let xmlStr = '<input><qualitycontrol type="no" losequantity="0" delay="0"/>';
         
-        xmlStr += await this.writeSellwish(period);
+        xmlStr += await this.writeSellwish(period, p1, p2, p3);
         xmlStr += await this.writeSellDirect(period);
         xmlStr += await this.writeOrders(period);
         xmlStr += await this.writeProd(period);
@@ -180,16 +180,16 @@ export class FileWriterService {
         return xmlStr;
     }
 
-    private async writeSellwish(period) {
+    private async writeSellwish(period, p1, p2, p3) {
         const wishes = await this.forecastService.getByPeriod(period);
         const wish = wishes[0];
 
         let xmlStr = '<sellwish>';
 
         if (wish) {
-            xmlStr += `<item article="1" quantity="${wish.firstP1}"/>
-            <item article="2" quantity="${wish.firstP2}"/>
-            <item article="3" quantity="${wish.firstP3}"/>`
+            xmlStr += `<item article="1" quantity="${p1}"/>
+            <item article="2" quantity="${p2}"/>
+            <item article="3" quantity="${p3}"/>`
         }
         
         xmlStr += '</sellwish>';
