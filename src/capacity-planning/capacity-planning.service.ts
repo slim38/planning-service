@@ -72,7 +72,7 @@ export class CapacityPlanningService {
                     wipTime += wip.timeneed;
                 }
 
-                if (article.waitingList) {
+                if (article.waitingList?.length > 0) {
                     totalSetUpTimePrev + productionStep.setupTime;
                 }
 
