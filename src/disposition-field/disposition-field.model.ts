@@ -13,6 +13,7 @@ export class DispositionField extends Model {
     dispositionId: string;
 
     @Column
+    @ForeignKey( () => DispositionField )
     parentId: number;
 
     @Column
@@ -40,6 +41,6 @@ export class DispositionField extends Model {
     @BelongsTo(() => Article)
     article: Article;
 
-    @HasMany( () => DispositionField, {sourceKey: 'parentId', foreignKey: 'id', constraints: false})
+    @HasMany( () => DispositionField, 'parentId')
     childFields: DispositionField[];
 }
