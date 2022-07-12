@@ -40,6 +40,6 @@ export class DispositionField extends Model {
     @BelongsTo(() => Article)
     article: Article;
 
-    @HasMany( () => DispositionField, 'parentId')
+    @HasMany( () => DispositionField, {sourceKey: 'parentId', foreignKey: 'id', constraints: false})
     childFields: DispositionField[];
 }
