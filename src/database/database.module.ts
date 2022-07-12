@@ -25,8 +25,8 @@ import { parse } from 'url';
 @Module({})
 export class DatabaseModule {
     static forRoot() {
-    const { DATABASE_URL } = process.env;
-    const dbUrl = parse(DATABASE_URL);
+    const { CLEARDB_DATABASE_URL } = process.env;
+    const dbUrl = parse(CLEARDB_DATABASE_URL);
     const username = dbUrl.auth.substr(0, dbUrl.auth.indexOf(':'));
     const password = dbUrl.auth.substr(
     dbUrl.auth.indexOf(':') + 1,

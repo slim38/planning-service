@@ -52,6 +52,7 @@ import { BatchPositionModule } from './batch-position/batch-position.module';
 import { Batch } from './batch/batch.model';
 import { BatchPosition } from './batch-position/batch-position.model';
 import { DatabaseModule } from './database/database.module';
+import { DispositionFieldService } from './disposition-field/disposition-field.service';
 
 @Module({
   imports: [
@@ -88,7 +89,8 @@ export class AppModule implements OnApplicationBootstrap {
     private productionPartService: ProductionPartService,
     private oiwService: OrdersInWorkService,
     private sequelize: Sequelize,
-    private dispositionService: DispositionService
+    private dispositionService: DispositionService,
+    private dispoFieldServ: DispositionFieldService
   ) {}
 
   async onApplicationBootstrap() {
