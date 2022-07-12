@@ -38,7 +38,7 @@ export class DatabaseModule {
     const portNr = parseInt(port);
 
     return SequelizeModule.forRoot({
-        dialect: 'postgres',
+        dialect: 'mysql',
         host,
         port: portNr,
         username,
