@@ -51,39 +51,12 @@ import { BatchModule } from './batch/batch.module';
 import { BatchPositionModule } from './batch-position/batch-position.module';
 import { Batch } from './batch/batch.model';
 import { BatchPosition } from './batch-position/batch-position.model';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
     FileReaderModule,
-    SequelizeModule.forRoot({
-      dialect: 'sqlite',
-      storage: 'memory',
-      username: 'root',
-      password: '',
-      database: 'planning_db',
-      models: [
-        Article,
-        PurchasingPart,
-        ProductionPart,
-        WlWorkstation,
-        OrdersInWork,
-        Disposition,
-        DispositionField,
-        Workplace,
-        ProductionStep,
-        CapacityPlanning,
-        CapacityPlanningField,
-        PlanningFieldPosition,
-        FuturInward,
-        PurchasePlanningModel,
-        PurchasePositionModel,
-        PurchasePositionMasterModel,
-        Forecast,
-        DirectSell,
-        Batch,
-        BatchPosition
-      ],
-    }),
+    DatabaseModule.forRoot(),
     ArticleModule,
     PurchasingPartModule,
     ProductionPartModule,
@@ -104,6 +77,7 @@ import { BatchPosition } from './batch-position/batch-position.model';
     FileWriterModule,
     BatchModule,
     BatchPositionModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
