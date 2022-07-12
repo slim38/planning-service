@@ -92,8 +92,8 @@ export class AppModule implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap() {
-    //await this.sequelize.drop();
-    //await this.sequelize.sync().catch((err)=>console.log('FIRST___________' + err.message));
+    await this.sequelize.drop();
+    await this.sequelize.sync().catch((err)=>console.log('FIRST___________' + err.message));
     /*
     await this.productionPartService.create(1, 26);
     await this.productionPartService.create(1, 51);

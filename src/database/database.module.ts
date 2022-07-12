@@ -44,6 +44,11 @@ export class DatabaseModule {
         username,
         password,
         database: dbName,
+        dialectOptions: {
+            ssl: {
+                rejectUnauthorized: false
+            }
+        },
         models: [
           Article,
           PurchasingPart,
