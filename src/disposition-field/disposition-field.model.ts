@@ -13,7 +13,6 @@ export class DispositionField extends Model {
     dispositionId: string;
 
     @Column
-    @ForeignKey( () => DispositionField )
     parentId: number;
 
     @Column
